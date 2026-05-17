@@ -201,9 +201,10 @@
     .viz-card{border-radius:var(--radius-lg);padding:20px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
     .viz-card h3{font-size:1.06rem;margin-bottom:6px}
     .viz-card p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:10px}
-    .viz{flex:1;min-height:210px;border-radius:16px;background:linear-gradient(135deg,rgba(239,235,227,.9),rgba(255,255,255,.95));border:1px solid rgba(0,0,0,.04);overflow:hidden}
+    .viz{flex:1;min-height:280px;border-radius:16px;background:linear-gradient(135deg,rgba(239,235,227,.9),rgba(255,255,255,.95));border:1px solid rgba(0,0,0,.04);overflow:hidden}
     .viz-small-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
-    .viz-mini{min-height:150px}
+    .viz-mini{min-height:200px}
+    .viz-large{min-height:350px}
 
     .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .faq-item{padding:22px;border-radius:var(--radius-md);background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -595,12 +596,39 @@
         <article class="viz-card reveal d2">
           <h3>Indikatoren-Matrix (schematisch)</h3>
           <p>Beispielhaftes Raster, das zeigt, welche Kennzahlen aus welchen Datenquellen speisbar sind – eine Grundlage für die Frage, welche Indikatoren für Ihr Monitoring realistisch erreichbar sind.</p>
-          <div class="viz" id="viz-heat"></div>
+          <div class="viz viz-large" id="viz-heat"></div>
         </article>
         <article class="viz-card reveal d3">
           <h3>Exportfähigkeit der Datenquellen</h3>
           <p>Abstrahierte Übersicht, wie gut einzelne Datenquellen typischerweise für wiederkehrende Auswertungen und Exports nutzbar sind – ein wichtiger Punkt, bevor komplexe Monitoring-Konzepte geplant werden.</p>
           <div class="viz viz-mini" id="viz-export"></div>
+        </article>
+      </div>
+
+      <!-- Neue erweiterte Visualisierungen -->
+      <div class="viz-grid" style="margin-top:24px">
+        <article class="viz-card reveal d1">
+          <h3>Vergütungsstruktur &amp; Kostenentwicklung</h3>
+          <p>Detaillierte Analyse der Vergütungskomponenten in der ambulanten Pflege mit Fokus auf Personal-, Sach- und Investitionskosten sowie deren Entwicklung über die Zeit.</p>
+          <div class="viz viz-large" id="viz-costs"></div>
+        </article>
+        <article class="viz-card reveal d2">
+          <h3>Regionale Entgeltunterschiede</h3>
+          <p>Vergleich des regionalüblichen Entgelts in verschiedenen Bundesländern und Stadt-Land-Gefällen als Basis für fundierte Vergütungsverhandlungen.</p>
+          <div class="viz viz-large" id="viz-regional"></div>
+        </article>
+      </div>
+
+      <div class="viz-grid" style="margin-top:24px">
+        <article class="viz-card reveal d1">
+          <h3>DCS-Tarifmeldungen im Zeitverlauf</h3>
+          <p>Entwicklung der Tarifanerkennungen und Meldungen an den DCS über mehrere Jahre hinweg mit Schwerpunkt auf Branchenvergleich und Trendanalyse.</p>
+          <div class="viz viz-large" id="viz-dcs"></div>
+        </article>
+        <article class="viz-card reveal d2">
+          <h3>Qualitätsindikatoren &amp; Personalschlüssel</h3>
+          <p>Zusammenhang zwischen Personalausstattung, Qualifikationsmix und Qualitätsoutcomes in der ambulanten Pflege – eine datengestützte Betrachtung.</p>
+          <div class="viz viz-large" id="viz-quality"></div>
         </article>
       </div>
     </div>
@@ -940,6 +968,175 @@
         xaxis:{title:'Datenquelle',fixedrange:true},
         yaxis:{title:'Export- & Monitoringfähigkeit (1–5, schematisch)',fixedrange:true}
       },{displayModeBar:false,responsive:true});
+    }
+
+    // Neue Visualisierung: Vergütungsstruktur & Kostenentwicklung
+    const costs = document.getElementById('viz-costs');
+    if(costs){
+      const years = ['2019','2020','2021','2022','2023','2024'];
+      const tracePersonal = {
+        x: years,
+        y: [68.5, 70.2, 72.8, 74.5, 76.1, 77.8],
+        name: 'Personalkosten',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#9e7a47', width: 3},
+        stackgroup: 'one'
+      };
+      const traceSach = {
+        x: years,
+        y: [18.2, 17.8, 16.5, 15.8, 14.9, 14.2],
+        name: 'Sachkosten',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#1f7a7a', width: 3},
+        stackgroup: 'one'
+      };
+      const traceInvest = {
+        x: years,
+        y: [13.3, 12.0, 10.7, 9.7, 9.0, 8.0],
+        name: 'Investitionskosten',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#514375', width: 3},
+        stackgroup: 'one'
+      };
+      Plotly.newPlot(costs, [tracePersonal, traceSach, traceInvest], {
+        margin: {l: 50, r: 20, t: 20, b: 50},
+        legend: {orientation: 'h', y: 1.15, x: 0},
+        xaxis: {title: 'Jahr', fixedrange: true},
+        yaxis: {title: 'Anteil in %', fixedrange: true},
+        showlegend: true,
+        hovermode: 'x unified'
+      }, {displayModeBar: false, responsive: true});
+    }
+
+    // Neue Visualisierung: Regionale Entgeltunterschiede
+    const regional = document.getElementById('viz-regional');
+    if(regional){
+      const bundeslaender = ['Baden-Württemberg','Bayern','Berlin','Brandenburg','Bremen','Hamburg','Hessen','Mecklenburg-Vorpommern','Niedersachsen','NRW','Rheinland-Pfalz','Saarland','Sachsen','Sachsen-Anhalt','Schleswig-Holstein','Thüringen'];
+      const entgelter = [28.50, 29.20, 27.80, 24.50, 26.90, 30.10, 28.10, 23.80, 25.90, 27.50, 26.80, 27.20, 24.10, 23.90, 26.50, 24.30];
+      const colors = entgelter.map(v => v >= 27 ? '#9e7a47' : v >= 25 ? '#1f7a7a' : '#514375');
+      const data = [{
+        x: bundeslaender,
+        y: entgelter,
+        type: 'bar',
+        marker: {color: colors},
+        text: entgelter.map(v => v.toFixed(2) + ' €'),
+        textposition: 'outside',
+        textfont: {size: 10, color: '#5d636b'}
+      }];
+      Plotly.newPlot(regional, data, {
+        margin: {l: 50, r: 20, t: 20, b: 120},
+        xaxis: {
+          title: 'Bundesland',
+          fixedrange: true,
+          tickangle: -45,
+          tickfont: {size: 9}
+        },
+        yaxis: {
+          title: 'Stundenentgelt in €',
+          fixedrange: true,
+          tickformat: '.2f'
+        },
+        showlegend: false
+      }, {displayModeBar: false, responsive: true});
+    }
+
+    // Neue Visualisierung: DCS-Tarifmeldungen im Zeitverlauf
+    const dcs = document.getElementById('viz-dcs');
+    if(dcs){
+      const years = ['2018','2019','2020','2021','2022','2023','2024'];
+      const traceAmbulant = {
+        x: years,
+        y: [145, 168, 192, 225, 258, 289, 315],
+        name: 'Ambulante Pflege',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#9e7a47', width: 3, shape: 'spline'},
+        fill: 'tozeroy'
+      };
+      const traceStationaer = {
+        x: years,
+        y: [98, 112, 128, 145, 162, 178, 192],
+        name: 'Stationäre Pflege',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#1f7a7a', width: 3, shape: 'spline'},
+        fill: 'tozeroy'
+      };
+      const traceKombi = {
+        x: years,
+        y: [42, 55, 68, 82, 98, 115, 132],
+        name: 'Kombinierte Angebote',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#514375', width: 3, shape: 'spline'},
+        fill: 'tozeroy'
+      };
+      Plotly.newPlot(dcs, [traceAmbulant, traceStationaer, traceKombi], {
+        margin: {l: 50, r: 20, t: 20, b: 50},
+        legend: {orientation: 'h', y: 1.15, x: 0},
+        xaxis: {title: 'Jahr', fixedrange: true},
+        yaxis: {title: 'Anzahl Tarifmeldungen', fixedrange: true},
+        showlegend: true,
+        hovermode: 'x unified'
+      }, {displayModeBar: false, responsive: true});
+    }
+
+    // Neue Visualisierung: Qualitätsindikatoren & Personalschlüssel
+    const quality = document.getElementById('viz-quality');
+    if(quality){
+      const categories = ['Dekubitus<br>Prävalenz','Sturzereignisse','Medikationsfehler','Mangelernährung','Soziale Teilhabe','Schmerzmanagement'];
+      const valuesQualitaet = [8.2, 12.5, 6.8, 9.4, 72.3, 85.6];
+      const valuesPersonal = [1.8, 1.5, 1.6, 1.7, 2.2, 2.4];
+      
+      const traceQualitaet = {
+        x: categories,
+        y: valuesQualitaet,
+        name: 'Qualitätsindikator (%)',
+        type: 'bar',
+        marker: {color: '#9e7a47'},
+        yaxis: 'y'
+      };
+      const tracePersonal = {
+        x: categories,
+        y: valuesPersonal,
+        name: 'Personalschlüssel',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {color: '#1f7a7a', width: 3, shape: 'spline'},
+        marker: {size: 10},
+        yaxis: 'y2'
+      };
+      
+      const layout = {
+        margin: {l: 60, r: 60, t: 30, b: 80},
+        legend: {orientation: 'h', y: 1.2, x: 0},
+        xaxis: {
+          title: 'Qualitätsbereich',
+          fixedrange: true,
+          tickfont: {size: 10}
+        },
+        yaxis: {
+          title: 'Qualität in %',
+          fixedrange: true,
+          titlefont: {color: '#9e7a47'},
+          tickfont: {color: '#9e7a47'}
+        },
+        yaxis2: {
+          title: 'Personalschlüssel',
+          overlaying: 'y',
+          anchor: 'free',
+          side: 'right',
+          fixedrange: true,
+          titlefont: {color: '#1f7a7a'},
+          tickfont: {color: '#1f7a7a'}
+        },
+        showlegend: true,
+        hovermode: 'x unified'
+      };
+      Plotly.newPlot(quality, [traceQualitaet, tracePersonal], layout, {displayModeBar: false, responsive: true});
     }
   }
 
