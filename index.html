@@ -120,10 +120,10 @@
     .card{border-radius:var(--radius-xl);padding:32px}
     .card p{color:var(--muted);line-height:1.70}
 
-    .field-card,.law-card,.step-card,.story-card,.faq-item,.contact-card{
+    .field-card,.law-card,.step-card,.story-card,.faq-item,.contact-card,.viz-card{
       transition:box-shadow .3s ease,transform .3s var(--ease);
     }
-    .field-card:hover,.law-card:hover,.step-card:hover,.story-card:hover,.faq-item:hover,.contact-card:hover{
+    .field-card:hover,.law-card:hover,.step-card:hover,.story-card:hover,.faq-item:hover,.contact-card:hover,.viz-card:hover{
       box-shadow:var(--shadow-hover);transform:translateY(-3px);
     }
 
@@ -195,6 +195,14 @@
     .story-meta{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted)}
     .story-diag{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.8rem;font-weight:600;color:var(--gold);letter-spacing:.04em;text-transform:uppercase}
 
+    .viz-grid{display:grid;grid-template-columns:2fr 1.2fr;gap:18px;align-items:stretch;margin-top:8px}
+    .viz-card{border-radius:var(--radius-lg);padding:20px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .viz-card h3{font-size:1.06rem;margin-bottom:6px}
+    .viz-card p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:10px}
+    .viz{flex:1;min-height:210px;border-radius:16px;background:linear-gradient(135deg,rgba(239,235,227,.9),rgba(255,255,255,.95));border:1px solid rgba(0,0,0,.04);overflow:hidden}
+    .viz-small-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
+    .viz-mini{min-height:150px}
+
     .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .faq-item{padding:22px;border-radius:var(--radius-md);background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .faq-item h4{margin-bottom:8px;font-size:.97rem}
@@ -249,6 +257,7 @@
       .fields{grid-template-columns:repeat(2,1fr)}
       .process{grid-template-columns:repeat(3,1fr)}
       .process-line{display:none}
+      .viz-grid{grid-template-columns:1fr}
     }
     @media(max-width:1024px){
       .hero-grid,.two-col,.contact-grid,.stories{grid-template-columns:1fr}
@@ -262,7 +271,7 @@
       .nav-links{display:none}
       .three-col,.law-grid,.faq-grid,.process,.fields{grid-template-columns:1fr}
       .metric-row{grid-template-columns:1fr 1fr}
-      .hero-copy,.card,.field-card,.step-card,.story-card,.contact-card{padding:20px}
+      .hero-copy,.card,.field-card,.step-card,.story-card,.contact-card,.viz-card{padding:20px}
       h1{max-width:100%}
       .statement{padding:26px 24px}
       .band{padding:28px 0}
@@ -284,6 +293,7 @@
       <a href="#problem">Forschungsfragen</a>
       <a href="#profil">Profil</a>
       <a href="#ansatz">Ansatz &amp; Methoden</a>
+      <a href="#visuals">Visuelle Einblicke</a>
       <a href="#felder">Anwendungsfelder</a>
       <a href="#faq">FAQ</a>
       <a class="button btn-dark" href="#kontakt">Kontakt</a>
@@ -398,7 +408,7 @@
         <article class="law-card">
           <div class="law-tag"><span></span>Tarifanerkennung</div>
           <h3>Tarifanerkennung in der ambulanten Pflege</h3>
-          <p>Wie Tarifverträge, Haustarife und nichttarifliche Entgelte im Rahmen der Tarifanerkennung bewertet werden – und welche Rolle Datenlage, Dokumentation und regionalübliche Entgelte dabei spielen.</p>
+          <p>Wie Tarifverträge, Haustarife und nichttarifliche Entgelte im Rahmen der Tarifanerkennung bewertet werden – und welche Rolle Datenlage, Dokumentation und regionale übliche Entgelte dabei spielen.</p>
         </article>
         <article class="law-card">
           <div class="law-tag"><span></span>DCS-Tarifmeldungen</div>
@@ -542,11 +552,43 @@
     </div>
   </div>
 
-  <!-- KAPITEL IV – ANWENDUNGSFELDER -->
-  <section class="section" id="felder">
+  <!-- KAPITEL IV – VISUELLE EINBLICKE -->
+  <section class="section" id="visuals">
     <div class="container">
       <div class="section-head reveal">
         <div class="chapter"><span class="chapter-num">Kapitel IV</span><span class="chapter-line"></span></div>
+        <h2>Visuelle Einblicke</h2>
+        <p class="section-sub">Beispielhafte Darstellungen, wie Vergütungsforschung, Monitoring und Tarifanerkennung in einfache Visualisierungen übersetzt werden können – ohne echte Einrichtungsdaten zu zeigen.</p>
+      </div>
+
+      <div class="viz-grid">
+        <article class="viz-card reveal d1">
+          <h3>Monitoring von Verhandlungsverläufen (Beispiel)</h3>
+          <p>Eine abstrahierte Zeitreihe, die zeigt, wie sich Kennzahlen rund um Vergütungsverhandlungen über mehrere Jahre entwickeln könnten – als Anregung für interne Dashboards.</p>
+          <div class="viz" id="viz-timeline"></div>
+        </article>
+
+        <div class="viz-small-grid">
+          <article class="viz-card reveal d2">
+            <h3>Datenquellen im Blick</h3>
+            <p>Verhältnis verschiedener Datenquellen (z. B. Pflegedokumentation, DCS-Tarifmeldungen, QM-Berichte) in einer schematischen Darstellung.</p>
+            <div class="viz viz-mini" id="viz-sources"></div>
+          </article>
+          <article class="viz-card reveal d3">
+            <h3>Tarif- &amp; Entgeltstruktur (Skizze)</h3>
+            <p>Ein abstrahiertes Bild möglicher Anteile von Tarifgruppen – als Gesprächsanlass für gesundheitsökonomische Betrachtungen.</p>
+            <div class="viz viz-mini" id="viz-tarif"></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KAPITEL V – ANWENDUNGSFELDER -->
+  <section class="section" id="felder">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="chapter"><span class="chapter-num">Kapitel V</span><span class="chapter-line"></span></div>
         <h2>Anwendungsfelder</h2>
         <p class="section-sub">Wo meine Arbeit typischerweise andockt – und welche Fragen dort im Vordergrund stehen.</p>
       </div>
@@ -596,11 +638,11 @@
     </div>
   </section>
 
-  <!-- KAPITEL V – FAQ -->
+  <!-- KAPITEL VI – FAQ -->
   <section class="section" id="faq">
     <div class="container">
       <div class="section-head reveal">
-        <div class="chapter"><span class="chapter-num">Kapitel V</span><span class="chapter-line"></span></div>
+        <div class="chapter"><span class="chapter-num">Kapitel VI</span><span class="chapter-line"></span></div>
         <h2>Fragen zur Zusammenarbeit</h2>
         <p class="section-sub">Einige Punkte, die in ersten Gesprächen regelmäßig auftauchen.</p>
       </div>
@@ -633,11 +675,11 @@
     </div>
   </section>
 
-  <!-- KAPITEL VI – KONTAKT -->
+  <!-- KAPITEL VII – KONTAKT -->
   <section class="section" id="kontakt">
     <div class="container">
       <div class="section-head reveal">
-        <div class="chapter"><span class="chapter-num">Kapitel VI</span><span class="chapter-line"></span></div>
+        <div class="chapter"><span class="chapter-num">Kapitel VII</span><span class="chapter-line"></span></div>
         <h2>Kontakt und Projektanbahnung</h2>
         <p class="section-sub">Wenn Sie eine Fragestellung sehen, die in dieses Feld passt, können wir darüber sprechen, wie ein gemeinsames Vorgehen aussehen kann.</p>
       </div>
@@ -721,6 +763,7 @@
       <a class="muted-link" href="#problem">Forschungsfragen</a> ·
       <a class="muted-link" href="#profil">Profil</a> ·
       <a class="muted-link" href="#ansatz">Ansatz</a> ·
+      <a class="muted-link" href="#visuals">Visuals</a> ·
       <a class="muted-link" href="#felder">Anwendungsfelder</a> ·
       <a class="muted-link" href="#faq">FAQ</a> ·
       <a class="muted-link" href="#kontakt">Kontakt</a>
@@ -728,6 +771,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <script>
   const hdr = document.getElementById('hdr');
   addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 18), {passive:true});
@@ -777,6 +821,75 @@
   dz('mailShare').onclick     = () => { location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Anfrage Vergütungsverhandlungen – der-pflegeberater.de')+'&body='+encodeURIComponent(text()); };
 
   renderFiles();
+
+  // Plotly Visuals – abstrahierte Beispielgrafiken, keine echten Einrichtungsdaten
+  function initVisuals(){
+    if(typeof Plotly === 'undefined') return;
+
+    const t = document.getElementById('viz-timeline');
+    if(t){
+      const trace1 = {
+        x:['Jahr 1','Jahr 2','Jahr 3','Jahr 4','Jahr 5'],
+        y:[2,3,4,4,5],
+        name:'Verhandlungen gesamt',
+        type:'scatter',
+        mode:'lines+markers',
+        line:{color:'#9e7a47',width:3}
+      };
+      const trace2 = {
+        x:['Jahr 1','Jahr 2','Jahr 3','Jahr 4','Jahr 5'],
+        y:[1,2,2,3,3],
+        name:'mit Tarifanerkennung',
+        type:'scatter',
+        mode:'lines+markers',
+        line:{color:'#1f7a7a',width:2,dash:'dot'}
+      };
+      Plotly.newPlot(t,[trace1,trace2],{
+        margin:{l:35,r:10,t:10,b:35},
+        legend:{orientation:'h',x:0,y:1.2},
+        xaxis:{title:'Zeitraum (schematisch)'},
+        yaxis:{title:'Anzahl (abstrahiert)',fixedrange:true},
+        showlegend:true
+      },{displayModeBar:false,responsive:true});
+    }
+
+    const s = document.getElementById('viz-sources');
+    if(s){
+      const data = [{
+        values:[40,30,20,10],
+        labels:['Pflegedokumentation','DCS-Tarifmeldungen','QM / Controlling','Sonstige Quellen'],
+        type:'pie',
+        hole:0.45,
+        marker:{colors:['#9e7a47','#1f7a7a','#514375','#c7c2b7']}
+      }];
+      Plotly.newPlot(s,data,{
+        margin:{l:10,r:10,t:10,b:10},
+        showlegend:true,
+        legend:{orientation:'v'}
+      },{displayModeBar:false,responsive:true});
+    }
+
+    const u = document.getElementById('viz-tarif');
+    if(u){
+      const data = [{
+        x:['EG 1–3','EG 4–6','EG 7+'],
+        y:[30,45,25],
+        type:'bar',
+        marker:{color:['#e3def2','#9e7a47','#1f7a7a']}
+      }];
+      Plotly.newPlot(u,data,{
+        margin:{l:35,r:10,t:10,b:35},
+        xaxis:{title:'Tarifgruppen (schematisch)',fixedrange:true},
+        yaxis:{title:'Anteil (abstrahiert in %)',fixedrange:true}
+      },{displayModeBar:false,responsive:true});
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded',initVisuals);
+  }else{
+    initVisuals();
+  }
 </script>
 </body>
 </html>
