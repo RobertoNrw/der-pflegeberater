@@ -21,10 +21,12 @@
       --gold:#9e7a47;
       --gold-soft:#efe4d2;
       --shadow:0 24px 70px rgba(0,0,0,.08);
+      --shadow-hover:0 32px 80px rgba(0,0,0,.13);
       --radius-xl:34px;
       --radius-lg:26px;
       --radius-md:18px;
       --max:1240px;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     *{box-sizing:border-box}
@@ -47,6 +49,23 @@
     a{text-decoration:none;color:inherit}
     .container{width:min(var(--max),calc(100% - 40px));margin:0 auto}
 
+    /* ==================== SCROLL ANIMATION ==================== */
+    .reveal{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .7s var(--ease-out-expo), transform .7s var(--ease-out-expo);
+    }
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .reveal-delay-1{transition-delay:.08s}
+    .reveal-delay-2{transition-delay:.16s}
+    .reveal-delay-3{transition-delay:.24s}
+    .reveal-delay-4{transition-delay:.32s}
+    .reveal-delay-5{transition-delay:.40s}
+
+    /* ==================== HEADER ==================== */
     .site-header{
       position:sticky;
       top:0;
@@ -54,6 +73,10 @@
       background:rgba(244,241,234,.84);
       backdrop-filter:blur(22px);
       border-bottom:1px solid rgba(0,0,0,.06);
+      transition:box-shadow .3s ease;
+    }
+    .site-header.scrolled{
+      box-shadow:0 2px 24px rgba(0,0,0,.06);
     }
 
     .nav{
@@ -98,9 +121,24 @@
       color:var(--muted);
       font-size:.96rem;
       transition:color .18s ease;
+      position:relative;
     }
+    .nav-links a:not(.button)::after{
+      content:'';
+      position:absolute;
+      bottom:-2px;
+      left:0;
+      right:0;
+      height:1px;
+      background:var(--gold);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .24s var(--ease-out-expo);
+    }
+    .nav-links a:not(.button):hover::after{transform:scaleX(1)}
     .nav-links a:hover{color:var(--ink)}
 
+    /* ==================== BUTTONS ==================== */
     .button{
       display:inline-flex;
       align-items:center;
@@ -111,28 +149,32 @@
       border:1px solid transparent;
       font-weight:600;
       font-size:.95rem;
-      transition:transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      transition:transform .22s var(--ease-out-expo), box-shadow .22s ease, background .22s ease, border-color .22s ease;
       cursor:pointer;
     }
-
     .button:hover{
-      transform:translateY(-1px);
-      box-shadow:0 16px 34px rgba(0,0,0,.09);
+      transform:translateY(-2px);
+      box-shadow:0 16px 34px rgba(0,0,0,.10);
     }
-
+    .button:active{transform:translateY(0);transition-duration:.08s}
     .button-dark{background:var(--ink);color:#fff}
     .button-light{background:rgba(255,255,255,.72);border-color:var(--line);color:var(--ink)}
     .button-outline{background:transparent;border-color:var(--line-strong);color:var(--ink)}
     .button-gold{background:var(--gold);color:#fff;border-color:transparent}
 
+    /* ==================== GLASS ==================== */
     .glass{
       background:var(--paper);
       border:1px solid rgba(255,255,255,.58);
       backdrop-filter:blur(18px);
       box-shadow:var(--shadow);
+      transition:box-shadow .35s ease, transform .35s var(--ease-out-expo);
+    }
+    .glass:hover{
+      box-shadow:var(--shadow-hover);
     }
 
-    /* HERO */
+    /* ==================== HERO ==================== */
     .hero{padding:56px 0 28px}
     .hero-grid{
       display:grid;
@@ -146,6 +188,18 @@
       border-radius:var(--radius-xl);
       overflow:hidden;
       position:relative;
+      animation: heroEnter .9s var(--ease-out-expo) both;
+    }
+    @keyframes heroEnter{
+      from{opacity:0;transform:translateY(32px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .hero-visual{
+      display:grid;
+      grid-template-rows:1fr auto;
+      gap:18px;
+      animation: heroEnter .9s .12s var(--ease-out-expo) both;
     }
 
     .eyebrow{
@@ -168,12 +222,7 @@
       letter-spacing:-.035em;
       font-weight:650;
     }
-
-    h1{
-      font-size:clamp(2.6rem,4.8vw,5.3rem);
-      max-width:12ch;
-    }
-
+    h1{font-size:clamp(2.6rem,4.8vw,5.3rem);max-width:12ch}
     h2{font-size:clamp(1.85rem,3vw,3rem)}
     h3{font-size:1.34rem}
     h4{font-size:1.04rem;letter-spacing:-.02em}
@@ -212,34 +261,20 @@
       transform:rotate(-1.8deg);
     }
 
-    .hero-visual{
-      display:grid;
-      grid-template-rows:1fr auto;
-      gap:18px;
-    }
-
     .portrait-card,.scene-card,.wide-illustration,.image-frame{
       overflow:hidden;
       border-radius:var(--radius-xl);
       position:relative;
     }
-
     .portrait-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      min-height:540px;
-      background:#fff;
+      width:100%;height:100%;object-fit:cover;min-height:540px;background:#fff;
+      transition:transform .6s var(--ease-out-expo);
     }
-
-    .scene-card img,.wide-illustration img,.image-frame img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
+    .portrait-card:hover img{transform:scale(1.025)}
+    .scene-card img,.wide-illustration img,.image-frame img{width:100%;height:100%;object-fit:cover}
     .scene-card img{min-height:184px}
 
+    /* ==================== SECTIONS ==================== */
     .section{padding:32px 0}
     .section-header{
       display:flex;
@@ -248,13 +283,7 @@
       gap:20px;
       margin-bottom:24px;
     }
-
-    .section-header p{
-      margin:0;
-      max-width:60ch;
-      color:var(--muted);
-      line-height:1.7;
-    }
+    .section-header p{margin:0;max-width:60ch;color:var(--muted);line-height:1.7}
 
     .intro-grid,.contact-grid,.authority-grid{
       display:grid;
@@ -263,77 +292,98 @@
       align-items:stretch;
     }
 
-    .card{
-      border-radius:var(--radius-xl);
-      padding:32px;
-    }
-
+    /* ==================== CARDS ==================== */
+    .card{border-radius:var(--radius-xl);padding:32px}
     .card p{margin:0;color:var(--muted);line-height:1.72}
 
-    .divider-list{
-      display:grid;
-      gap:0;
-      margin-top:18px;
+    /* universal hover lift for all content cards */
+    .package-card,.quality-card,.law-card,.process-card,.story-card,.faq-item,.credential-block{
+      transition: box-shadow .32s ease, transform .32s var(--ease-out-expo);
+    }
+    .package-card:hover,.quality-card:hover,.law-card:hover,.process-card:hover,
+    .story-card:hover,.faq-item:hover,.credential-block:hover{
+      box-shadow:var(--shadow-hover);
+      transform:translateY(-3px);
     }
 
-    .divider-item{
-      padding:16px 0;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.7;
-    }
-
+    .divider-list{display:grid;gap:0;margin-top:18px}
+    .divider-item{padding:16px 0;border-top:1px solid var(--line);color:var(--muted);line-height:1.7}
     .divider-item:last-child{border-bottom:1px solid var(--line)}
     .divider-item strong{color:var(--ink);display:block;margin-bottom:4px}
 
     .image-frame{padding:12px}
-    .image-frame img{
-      min-height:420px;
-      border-radius:22px;
-    }
+    .image-frame img{min-height:420px;border-radius:22px;transition:transform .6s var(--ease-out-expo)}
+    .image-frame:hover img{transform:scale(1.02)}
 
-    .caption{
-      padding:14px 8px 0;
-      font-size:.92rem;
-      color:var(--muted);
-      line-height:1.6;
-    }
+    .caption{padding:14px 8px 0;font-size:.92rem;color:var(--muted);line-height:1.6}
 
-    /* KENNZAHLEN */
+    /* ==================== FACTS ==================== */
     .facts{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:14px;
       margin-top:20px;
     }
-
     .fact{
       padding:20px 22px;
       border-radius:20px;
       background:rgba(255,255,255,.70);
       border:1px solid var(--line);
+      transition:box-shadow .28s ease, transform .28s var(--ease-out-expo);
     }
+    .fact:hover{box-shadow:0 12px 36px rgba(0,0,0,.08);transform:translateY(-2px)}
+    .fact strong{display:block;font-size:1.22rem;margin-bottom:6px;letter-spacing:-.02em}
+    .fact span{color:var(--muted);font-size:.92rem;line-height:1.55}
 
-    .fact strong{
-      display:block;
-      font-size:1.22rem;
-      margin-bottom:6px;
-      letter-spacing:-.02em;
+    /* ==================== TRUSTBAR ==================== */
+    .trustbar{
+      padding:20px 0;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      margin:28px 0;
     }
-
-    .fact span{
+    .trustbar-inner{
+      display:flex;
+      gap:36px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .trust-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
       color:var(--muted);
-      font-size:.92rem;
-      line-height:1.55;
+      font-size:.9rem;
+      font-weight:500;
     }
-
-    /* PAKETE */
-    .packages{
+    .trust-icon{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      background:var(--gold-soft);
+      border:1px solid rgba(158,122,71,.15);
       display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
+      place-items:center;
+      flex:0 0 34px;
+      transition:background .22s ease, transform .22s var(--ease-out-expo);
+    }
+    .trust-item:hover .trust-icon{
+      background:rgba(158,122,71,.22);
+      transform:scale(1.08);
+    }
+    .trust-icon svg{
+      width:16px;
+      height:16px;
+      stroke:var(--gold);
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
+    /* ==================== PAKETE ==================== */
+    .packages{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
     .package-card{
       min-height:100%;
       border-radius:30px;
@@ -344,13 +394,22 @@
       border:1px solid var(--line);
       box-shadow:var(--shadow);
     }
-
     .package-card.featured{
       background:linear-gradient(180deg, rgba(19,20,22,.97), rgba(33,38,45,.97));
       color:#fff;
       border:1px solid rgba(255,255,255,.08);
     }
-
+    .package-card.featured:hover{
+      box-shadow:0 36px 90px rgba(0,0,0,.22);
+    }
+    /* subtle shimmer on featured card */
+    .package-card.featured::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,.04) 0%, transparent 60%);
+      pointer-events:none;
+    }
     .package-badge{
       display:inline-flex;
       align-items:center;
@@ -363,40 +422,11 @@
       color:#30343a;
       font-weight:500;
     }
-
-    .featured .package-badge{
-      color:#fff;
-      background:rgba(255,255,255,.08);
-      border-color:rgba(255,255,255,.12);
-    }
-
-    .price{
-      margin:14px 0 10px;
-      font-size:2.4rem;
-      font-weight:700;
-      letter-spacing:-.045em;
-    }
-
-    .price small{
-      font-size:.93rem;
-      font-weight:500;
-      opacity:.72;
-    }
-
-    .package-copy{
-      color:inherit;
-      opacity:.88;
-      min-height:98px;
-      font-size:.97rem;
-      line-height:1.68;
-    }
-
-    .package-list{
-      display:grid;
-      gap:10px;
-      margin:20px 0 26px;
-    }
-
+    .featured .package-badge{color:#fff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+    .price{margin:14px 0 10px;font-size:2.4rem;font-weight:700;letter-spacing:-.045em}
+    .price small{font-size:.93rem;font-weight:500;opacity:.72}
+    .package-copy{color:inherit;opacity:.88;min-height:98px;font-size:.97rem;line-height:1.68}
+    .package-list{display:grid;gap:10px;margin:20px 0 26px}
     .package-item{
       display:flex;
       gap:12px;
@@ -406,34 +436,12 @@
       font-size:.95rem;
       line-height:1.58;
     }
-
     .featured .package-item{border-top-color:rgba(255,255,255,.08)}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);margin-top:7px;flex:0 0 10px}
 
-    .dot{
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:var(--gold);
-      margin-top:7px;
-      flex:0 0 10px;
-    }
-
-    /* DATENQUALITÄT */
-    .quality-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-top:20px;
-    }
-
-    .quality-card{
-      border-radius:26px;
-      padding:26px;
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
-
+    /* ==================== DATENQUALITÄT ==================== */
+    .quality-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
+    .quality-card{border-radius:26px;padding:26px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .quality-card h3{margin-bottom:10px}
     .quality-card p{margin:0;color:var(--muted);font-size:.97rem;line-height:1.68}
     .quality-level{
@@ -448,22 +456,9 @@
       font-weight:500;
     }
 
-    /* RECHTLICHER RAHMEN */
-    .law-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-      margin-top:20px;
-    }
-
-    .law-card{
-      border-radius:var(--radius-lg);
-      padding:26px;
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
-
+    /* ==================== RECHTLICHER RAHMEN ==================== */
+    .law-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
+    .law-card{border-radius:var(--radius-lg);padding:26px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .law-card .law-tag{
       display:inline-flex;
       align-items:center;
@@ -476,25 +471,23 @@
       margin-bottom:14px;
       font-weight:600;
     }
-
     .law-card h3{margin-bottom:10px}
     .law-card p{margin:0;color:var(--muted);font-size:.96rem;line-height:1.68}
 
-    /* ABLAUF */
-    .process{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:16px;
+    /* ==================== ABLAUF ==================== */
+    .process-wrapper{position:relative}
+    .process-connector{
+      position:absolute;
+      top:20px;
+      left:calc(10% + 20px);
+      right:calc(10% + 20px);
+      height:1px;
+      background:linear-gradient(90deg, var(--gold-soft), rgba(158,122,71,.3), var(--gold-soft));
+      z-index:0;
+      pointer-events:none;
     }
-
-    .process-card{
-      border-radius:var(--radius-lg);
-      padding:24px;
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
-
+    .process{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative;z-index:1}
+    .process-card{border-radius:var(--radius-lg);padding:24px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .process-index{
       width:40px;
       height:40px;
@@ -502,65 +495,32 @@
       display:grid;
       place-items:center;
       background:#fff;
-      border:1px solid var(--line);
-      color:var(--muted);
-      font-weight:650;
-      font-size:.95rem;
+      border:1.5px solid var(--gold-soft);
+      color:var(--gold);
+      font-weight:700;
+      font-size:.93rem;
       margin-bottom:16px;
+      transition:background .24s ease, border-color .24s ease, color .24s ease;
     }
-
+    .process-card:hover .process-index{
+      background:var(--gold-soft);
+      border-color:var(--gold);
+    }
     .process-card h3{margin-bottom:8px;font-size:1.12rem}
     .process-card p{color:var(--muted);margin:0;font-size:.93rem;line-height:1.65}
 
-    /* REFERENZEN / PRAXIS */
-    .stories{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-      margin-top:20px;
-    }
-
-    .story-card{
-      border-radius:var(--radius-lg);
-      padding:26px;
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
-
+    /* ==================== STORIES ==================== */
+    .stories{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+    .story-card{border-radius:var(--radius-lg);padding:26px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .story-card p,.contact-card p{color:var(--muted);margin:0;line-height:1.7}
     .story-card h3{margin-bottom:12px;font-size:1.16rem}
+    .story-meta{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
 
-    .story-meta{
-      margin-top:14px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:.88rem;
-      color:var(--muted);
-    }
-
-    /* EXPERTISE / CREDENTIALS */
-    .credentials-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:24px;
-      margin-top:20px;
-    }
-
-    .credential-block{
-      padding:28px 32px;
-      border-radius:var(--radius-xl);
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
-
+    /* ==================== CREDENTIALS ==================== */
+    .credentials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:20px}
+    .credential-block{padding:28px 32px;border-radius:var(--radius-xl);background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .credential-block h3{margin-bottom:14px}
-    .credential-list{
-      display:grid;
-      gap:0;
-    }
-
+    .credential-list{display:grid;gap:0}
     .credential-item{
       padding:12px 0;
       border-top:1px solid var(--line);
@@ -571,104 +531,84 @@
       gap:12px;
       align-items:flex-start;
     }
-
     .credential-item:last-child{border-bottom:1px solid var(--line)}
     .credential-check{
-      color:var(--gold);
-      font-weight:700;
-      flex:0 0 auto;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:var(--gold-soft);
+      display:grid;
+      place-items:center;
+      flex:0 0 20px;
       margin-top:1px;
     }
+    .credential-check svg{width:10px;height:10px;stroke:var(--gold);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 
-    /* FAQ */
-    .faq-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
-      margin-top:20px;
-    }
-
-    .faq-item{
-      padding:24px;
-      border-radius:var(--radius-md);
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-    }
-
+    /* ==================== FAQ ==================== */
+    .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:20px}
+    .faq-item{padding:24px;border-radius:var(--radius-md);background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .faq-item h4{margin-bottom:10px;font-size:1.0rem}
     .faq-item p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.68}
 
-    /* ZITAT/STATEMENT */
+    /* ==================== STATEMENT ==================== */
     .statement-block{
-      padding:42px;
+      padding:48px;
       border-radius:var(--radius-xl);
-      background:linear-gradient(135deg, rgba(19,20,22,.96), rgba(40,46,56,.96));
+      background:linear-gradient(135deg, rgba(19,20,22,.97), rgba(40,46,56,.97));
       color:#fff;
       margin-top:28px;
       position:relative;
       overflow:hidden;
     }
-
     .statement-block::before{
       content:'"';
       position:absolute;
-      top:-20px;
+      top:-30px;
       left:28px;
-      font-size:14rem;
-      opacity:.06;
+      font-size:16rem;
+      opacity:.05;
       font-family:Georgia,serif;
       line-height:1;
+      pointer-events:none;
     }
-
+    /* animated gradient orb */
+    .statement-block::after{
+      content:'';
+      position:absolute;
+      bottom:-60px;
+      right:-60px;
+      width:280px;
+      height:280px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(158,122,71,.18), transparent 70%);
+      pointer-events:none;
+    }
     .statement-block blockquote{
       margin:0;
-      font-size:clamp(1.2rem,2vw,1.7rem);
+      font-size:clamp(1.2rem,2vw,1.72rem);
       font-weight:600;
-      line-height:1.38;
+      line-height:1.4;
       letter-spacing:-.02em;
       max-width:72ch;
       position:relative;
     }
-
     .statement-author{
-      margin-top:20px;
+      margin-top:22px;
       font-size:.94rem;
-      opacity:.72;
+      opacity:.68;
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:14px;
     }
+    .statement-author::before{content:'';width:32px;height:1px;background:rgba(255,255,255,.35)}
 
-    .statement-author::before{
-      content:'';
-      width:28px;
-      height:1px;
-      background:rgba(255,255,255,.4);
-    }
+    /* ==================== WIDE ILLUSTRATION ==================== */
+    .wide-illustration{margin-top:24px;padding:12px}
+    .wide-illustration img{min-height:280px;border-radius:22px}
 
-    /* KONTAKT */
-    .wide-illustration{
-      margin-top:24px;
-      padding:12px;
-    }
-
-    .wide-illustration img{
-      min-height:280px;
-      border-radius:22px;
-    }
-
-    .contact-grid{
-      grid-template-columns:1.08fr .92fr;
-      align-items:start;
-    }
-
-    .contact-card{
-      border-radius:var(--radius-lg);
-      padding:28px;
-      background:var(--paper-strong);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-    }
+    /* ==================== CONTACT ==================== */
+    .contact-grid{grid-template-columns:1.08fr .92fr;align-items:start}
+    .contact-card{border-radius:var(--radius-lg);padding:28px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
 
     .dropzone{
       margin-top:18px;
@@ -676,37 +616,20 @@
       border-radius:24px;
       padding:28px;
       background:linear-gradient(180deg, rgba(255,255,255,.76), rgba(255,255,255,.60));
-      transition:border-color .2s ease, background .2s ease, transform .2s ease;
+      transition:border-color .22s ease, background .22s ease, transform .22s var(--ease-out-expo), box-shadow .22s ease;
     }
-
     .dropzone.dragover{
-      border-color:#0f1012;
+      border-color:var(--gold);
       background:rgba(255,255,255,.94);
-      transform:translateY(-2px);
+      transform:translateY(-3px);
+      box-shadow:0 14px 40px rgba(158,122,71,.12);
     }
-
-    .dropzone strong{
-      display:block;
-      font-size:1.1rem;
-      margin-bottom:6px;
-    }
-
+    .dropzone strong{display:block;font-size:1.1rem;margin-bottom:6px}
     .dropzone p{margin:0;color:var(--muted);font-size:.94rem}
     .dropzone input{display:none}
 
-    .drop-actions,.contact-buttons{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:18px;
-    }
-
-    .file-list{
-      display:grid;
-      gap:10px;
-      margin-top:18px;
-    }
-
+    .drop-actions,.contact-buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+    .file-list{display:grid;gap:10px;margin-top:18px}
     .file-pill{
       display:flex;
       justify-content:space-between;
@@ -717,28 +640,15 @@
       border:1px solid var(--line);
       background:#fff;
       font-size:.93rem;
+      animation: pillAppear .3s var(--ease-out-expo) both;
     }
+    @keyframes pillAppear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-    .small-note{
-      margin-top:14px;
-      font-size:.87rem;
-      color:var(--muted);
-      line-height:1.6;
-    }
+    .small-note{margin-top:14px;font-size:.87rem;color:var(--muted);line-height:1.6}
 
-    .contact-form{
-      display:grid;
-      gap:14px;
-      margin-top:18px;
-    }
-
+    .contact-form{display:grid;gap:14px;margin-top:18px}
     .field{display:grid;gap:8px}
-
-    label{
-      font-size:.93rem;
-      font-weight:600;
-      color:#2d3137;
-    }
+    label{font-size:.93rem;font-weight:600;color:#2d3137}
 
     input[type="text"],input[type="email"],textarea,select{
       width:100%;
@@ -750,24 +660,15 @@
       color:var(--ink);
       outline:none;
       font-size:.97rem;
+      transition:border-color .18s ease, box-shadow .18s ease;
     }
-
     input:focus,textarea:focus,select:focus{
-      border-color:#111;
-      box-shadow:0 0 0 3px rgba(17,17,17,.07);
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(158,122,71,.10);
     }
+    textarea{min-height:140px;resize:vertical}
 
-    textarea{
-      min-height:140px;
-      resize:vertical;
-    }
-
-    .bullet-points{
-      display:grid;
-      gap:0;
-      margin-top:18px;
-    }
-
+    .bullet-points{display:grid;gap:0;margin-top:18px}
     .bullet-points div{
       padding:12px 0;
       border-top:1px solid var(--line);
@@ -778,17 +679,10 @@
       gap:10px;
       align-items:flex-start;
     }
+    .bullet-points div::before{content:'→';color:var(--gold);font-weight:700;flex:0 0 auto}
 
-    .bullet-points div::before{
-      content:'→';
-      color:var(--gold);
-      font-weight:700;
-      flex:0 0 auto;
-    }
-
-    /* FOOTER */
+    /* ==================== FOOTER ==================== */
     .footer{padding:24px 0 48px}
-
     .footer-inner{
       display:flex;
       justify-content:space-between;
@@ -798,73 +692,23 @@
       border-top:1px solid var(--line);
       padding-top:24px;
     }
-
     .footer strong{font-size:1rem}
     .muted-link{color:var(--muted);transition:color .18s ease}
     .muted-link:hover{color:var(--ink)}
+    .footer-note{margin-top:8px;font-size:.86rem;color:var(--muted);max-width:52ch;line-height:1.6}
 
-    .footer-note{
-      margin-top:8px;
-      font-size:.86rem;
-      color:var(--muted);
-      max-width:52ch;
-      line-height:1.6;
-    }
-
-    /* TRUSTBAR */
-    .trustbar{
-      padding:18px 0;
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      margin:28px 0;
-    }
-
-    .trustbar-inner{
-      display:flex;
-      gap:32px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .trust-item{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color:var(--muted);
-      font-size:.9rem;
-    }
-
-    .trust-icon{
-      width:32px;
-      height:32px;
-      border-radius:50%;
-      background:var(--gold-soft);
-      display:grid;
-      place-items:center;
-      font-size:.85rem;
-      color:var(--gold);
-      font-weight:700;
-      flex:0 0 32px;
-    }
-
-    /* RESPONSIVE */
+    /* ==================== RESPONSIVE ==================== */
     @media (max-width:1160px){
-      .packages,.quality-grid,.law-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
+      .packages,.quality-grid,.law-grid{grid-template-columns:repeat(2,1fr)}
       .facts{grid-template-columns:repeat(2,1fr)}
       .process{grid-template-columns:repeat(3,1fr)}
+      .process-connector{display:none}
     }
-
     @media (max-width:1024px){
-      .hero-grid,.intro-grid,.authority-grid,.contact-grid,.stories,.credentials-grid{
-        grid-template-columns:1fr;
-      }
+      .hero-grid,.intro-grid,.authority-grid,.contact-grid,.stories,.credentials-grid{grid-template-columns:1fr}
       .portrait-card img{min-height:380px}
       .process{grid-template-columns:repeat(2,1fr)}
     }
-
     @media (max-width:720px){
       .container{width:min(var(--max),calc(100% - 24px))}
       .hero-copy,.card,.package-card,.quality-card,.process-card,.story-card,.contact-card,.credential-block,.law-card{padding:22px}
@@ -874,18 +718,22 @@
       .facts{grid-template-columns:repeat(2,1fr)}
       h1{max-width:100%}
       .statement-block{padding:28px}
+      .trustbar-inner{gap:20px}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .reveal,.hero-copy,.hero-visual{animation:none!important;opacity:1!important;transform:none!important;transition:none!important}
     }
   </style>
 </head>
 <body>
 
-  <header class="site-header">
+  <header class="site-header" id="siteHeader">
     <div class="container nav">
       <div class="brand">
         <div class="brand-title">www.der-pflegeberater.de</div>
         <div class="brand-signature">by Roberto Bonavita</div>
       </div>
-
       <nav class="nav-links">
         <a href="#profil">Profil</a>
         <a href="#rahmen">Rechtlicher Rahmen</a>
@@ -911,22 +759,18 @@
             und einer Verhandlungslogik, die nicht sauber vorbereitet wurde. Genau dort setze ich an –
             methodisch, ruhig und mit klarer Kenntnis des Verfahrens.
           </p>
-
           <div class="hero-actions">
             <a href="#pakete" class="button button-dark">Pakete ansehen</a>
             <a href="#kontakt" class="button button-light">Anfrage strukturiert übergeben</a>
           </div>
-
           <p class="hero-note">
             Beratung für ambulante Pflegedienste, Träger, Pflegeleitungen und Controlling-nahe Teams.
             Seriös im Ton, technisch präzise in der Umsetzung und inhaltlich darauf ausgerichtet,
             aus operativen Daten eine belastbare, verhandlungstaugliche Grundlage zu schaffen –
             für bilaterale Verhandlungen ebenso wie für Schiedsstellenverfahren nach § 76 SGB XI.
           </p>
-
           <div class="signature-line">klare Linie statt Datenrauschen</div>
         </div>
-
         <div class="hero-visual">
           <div class="portrait-card glass">
             <img src="img/portrait.jpg" alt="Porträt Roberto Bonavita" />
@@ -939,26 +783,54 @@
     </section>
 
     <!-- TRUSTBAR -->
-    <div class="container trustbar">
+    <div class="container trustbar reveal">
       <div class="trustbar-inner">
-        <div class="trust-item"><span class="trust-icon">§</span> SGB XI konform</div>
-        <div class="trust-item"><span class="trust-icon">✓</span> Schiedsstellenerfahrung NRW</div>
-        <div class="trust-item"><span class="trust-icon">↗</span> Nachweisbare Verhandlungsergebnisse</div>
-        <div class="trust-item"><span class="trust-icon">🔒</span> Datensicherer Austausch</div>
-        <div class="trust-item"><span class="trust-icon">⚡</span> Klare Reaktionszeiten</div>
+
+        <div class="trust-item">
+          <span class="trust-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          SGB XI konform
+        </div>
+
+        <div class="trust-item">
+          <span class="trust-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Schiedsstellenerfahrung NRW
+        </div>
+
+        <div class="trust-item">
+          <span class="trust-icon">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </span>
+          Nachweisbare Verhandlungsergebnisse
+        </div>
+
+        <div class="trust-item">
+          <span class="trust-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          Datensicherer Austausch
+        </div>
+
+        <div class="trust-item">
+          <span class="trust-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          Klare Reaktionszeiten
+        </div>
+
       </div>
     </div>
 
     <!-- PROFIL -->
     <section class="section" id="profil">
       <div class="container authority-grid">
-        <article class="card glass">
+        <article class="card glass reveal">
           <div class="section-header" style="margin-bottom:14px;">
-            <div>
-              <h2>Profil und Verhandlungsperspektive</h2>
-            </div>
+            <div><h2>Profil und Verhandlungsperspektive</h2></div>
           </div>
-
           <p>
             Ich begleite ambulante Pflegedienste in der inhaltlich und strukturell anspruchsvollsten Phase
             ihres wirtschaftlichen Betriebs: der Vergütungsverhandlung nach SGB XI. Meine Arbeit beginnt
@@ -966,36 +838,30 @@
             sind – und endet mit einer Grundlage, die sowohl in bilateralen Gesprächen als auch im
             formalisierten Schiedsstellenverfahren standhält.
           </p>
-
           <div class="divider-list">
             <div class="divider-item">
               <strong>Verhandlungserfahrung auf institutioneller Ebene</strong>
               Ich habe landesweit in Gremien Verträge verhandelt und kenne die Sprache, die Tonlage
-              und die Erwartungshaltung auf Seiten der Kostenträger aus eigener Praxis – nicht nur aus
-              der Literatur.
+              und die Erwartungshaltung auf Seiten der Kostenträger aus eigener Praxis – nicht nur aus der Literatur.
             </div>
             <div class="divider-item">
               <strong>Schiedsstellenkontexte nach § 76 SGB XI</strong>
-              Durch Begleitung von Schiedsstellenverfahren in NRW weiß ich, wie Unterlagen dort
-              bewertet werden. Das prägt meinen Blick auf jede Datei, jeden Export und jede Begründungszeile –
-              lange bevor das Verfahren beginnt.
+              Durch Begleitung von Schiedsstellenverfahren in NRW weiß ich, wie Unterlagen dort bewertet werden.
+              Das prägt meinen Blick auf jede Datei, jeden Export und jede Begründungszeile – lange bevor das Verfahren beginnt.
             </div>
             <div class="divider-item">
               <strong>Verbindung aus Praxis, Ökonomie und Daten</strong>
-              Mein Ansatz verbindet fachliche Pflegepraxis, betriebliche Struktur, datenbezogene Präzision
-              und eine bewusst reduzierte, seriöse Kommunikationsform – weil Einrichtungen in dieser Phase
-              Verlässlichkeit brauchen, keine Hochglanzpräsentationen.
+              Mein Ansatz verbindet fachliche Pflegepraxis, betriebliche Struktur, datenbez. Präzision
+              und eine bewusst reduzierte, seriöse Kommunikationsform – weil Einrichtungen in dieser Phase Verlässlichkeit brauchen.
             </div>
             <div class="divider-item">
               <strong>Systemkenntnisse: Vivendi, MediFox, SNAP und weitere</strong>
               Die relevanten Exporte, Auswertungswege und häufigen Fehlerquellen in den gängigen
-              Pflegesoftwaresystemen sind mir vertraut. Das spart erheblich Zeit bei der Datenaufbereitung
-              und vermeidet typische Abgrenzungsfehler.
+              Pflegesoftwaresystemen sind mir vertraut.
             </div>
           </div>
         </article>
-
-        <article class="card glass">
+        <article class="card glass reveal reveal-delay-1">
           <div class="image-frame">
             <img src="img/consulting.jpg" alt="Beratungs- und Verhandlungsszene" />
           </div>
@@ -1003,7 +869,6 @@
             Analyse, Abstimmung, Verhandlung, Vereinbarung: Diese vier Bewegungen prägen die Dramaturgie
             jeder erfolgreichen Vergütungsverhandlung – und strukturieren die Beratungsarbeit.
           </div>
-
           <div class="facts" style="margin-top:18px;grid-template-columns:1fr 1fr">
             <div class="fact">
               <strong>§ 89 SGB XI</strong>
@@ -1021,36 +886,29 @@
     <!-- CREDENTIALS -->
     <section class="section">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Warum diese Positionierung funktioniert</h2>
-          </div>
-          <p>
-            Nicht jeder, der Vergütungsverhandlungen kennt, kennt auch die Schwachstellen in den Daten.
-            Nicht jeder, der Daten kennt, kennt die Verhandlungslogik. Diese Kombination ist selten.
-          </p>
+        <div class="section-header reveal">
+          <div><h2>Warum diese Positionierung funktioniert</h2></div>
+          <p>Nicht jeder, der Vergütungsverhandlungen kennt, kennt auch die Schwachstellen in den Daten. Diese Kombination ist selten.</p>
         </div>
-
         <div class="credentials-grid">
-          <div class="credential-block">
+          <div class="credential-block reveal reveal-delay-1">
             <h3>Fachliche Grundlagen</h3>
             <div class="credential-list">
-              <div class="credential-item"><span class="credential-check">✓</span><span>Langjährige Erfahrung in der ambulanten Pflegepraxis und -steuerung</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Pflegewirtschaftliche Kenntnisse: Kostenkalkulation, Personalschlüssel, Auslastungsgrade</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Verfahrenskenntnis: bilaterale Verhandlungen und Schiedsstellenprozesse nach SGB XI</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Kenntnisse der MDK/MDS-Prüfsystematik und deren Wechselwirkung mit Vergütungsverhandlungen</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Analyse abgrenzungsrelevanter Positionen: Leistungszeiten, Einsatzplanung, Tourenstruktur</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Langjährige Erfahrung in der ambulanten Pflegepraxis und -steuerung</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Pflegewirtschaftliche Kenntnisse: Kostenkalkulation, Personalschlüssel, Auslastungsgrade</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Verfahrenskenntnis: bilaterale Verhandlungen und Schiedsstellenprozesse nach SGB XI</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Kenntnisse der MDK/MDS-Prüfsystematik und deren Wechselwirkung mit Vergütungsverhandlungen</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Analyse abgrenzungsrelevanter Positionen: Leistungszeiten, Einsatzplanung, Tourenstruktur</span></div>
             </div>
           </div>
-
-          <div class="credential-block">
+          <div class="credential-block reveal reveal-delay-2">
             <h3>Daten- und Methodenkompetenz</h3>
             <div class="credential-list">
-              <div class="credential-item"><span class="credential-check">✓</span><span>Tiefe Systemkenntnis: Vivendi, MediFox, SNAP, Medifox DAN und weitere gängige Systeme</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Datenstrukturierung, Matching und Plausibilisierung abgrenzungsrelevanter Werte</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Entwicklung individueller Export- und Klickanleitungen für Ihre Software</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Erkennung systematischer Fehlerquellen in Auswertungen und Exportständen</span></div>
-              <div class="credential-item"><span class="credential-check">✓</span><span>Aufbau nachvollziehbarer, verhandlungsfester Begründungsstrukturen</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Tiefe Systemkenntnis: Vivendi, MediFox, SNAP, Medifox DAN und weitere gängige Systeme</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Datenstrukturierung, Matching und Plausibilisierung abgrenzungsrelevanter Werte</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Entwicklung individueller Export- und Klickanleitungen für Ihre Software</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Erkennung systematischer Fehlerquellen in Auswertungen und Exportständen</span></div>
+              <div class="credential-item"><span class="credential-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span><span>Aufbau nachvollziehbarer, verhandlungsfester Begründungsstrukturen</span></div>
             </div>
           </div>
         </div>
@@ -1060,76 +918,50 @@
     <!-- RECHTLICHER RAHMEN -->
     <section class="section" id="rahmen">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Der rechtliche Rahmen im Überblick</h2>
-          </div>
-          <p>
-            Vergütungsverhandlungen in der ambulanten Pflege sind kein freier Marktprozess –
-            sie folgen einem gesetzlich definierten Rahmen, der Chancen und Risiken gleichermaßen enthält.
-          </p>
+        <div class="section-header reveal">
+          <div><h2>Der rechtliche Rahmen im Überblick</h2></div>
+          <p>Vergütungsverhandlungen folgen einem gesetzlich definierten Rahmen, der Chancen und Risiken gleichermaßen enthält.</p>
         </div>
-
         <div class="law-grid">
-          <article class="law-card">
+          <article class="law-card reveal reveal-delay-1">
             <div class="law-tag">§ 89 SGB XI</div>
             <h3>Individuelle Vergütungsvereinbarung</h3>
-            <p>
-              Jede Vergütungsvereinbarung wird einrichtungsbezogen und nicht pauschal geschlossen.
-              Die Vergütung muss es ermöglichen, eine leistungsfähige und wirtschaftliche ambulante
-              Pflege zu erbringen. Entscheidend ist die Plausibilität und Nachvollziehbarkeit der
-              eingebrachten Kalkulationsunterlagen – hier liegt das Kernfeld meiner Beratung.
-            </p>
+            <p>Jede Vergütungsvereinbarung wird einrichtungsbezogen und nicht pauschal geschlossen. Entscheidend ist die Plausibilität und Nachvollziehbarkeit der eingebrachten Kalkulationsunterlagen – hier liegt das Kernfeld meiner Beratung.</p>
           </article>
-
-          <article class="law-card">
+          <article class="law-card reveal reveal-delay-2">
             <div class="law-tag">§ 76 SGB XI</div>
             <h3>Schiedsstellen und Schiedsverfahren</h3>
-            <p>
-              Kommt keine Einigung zustande, entscheidet die Schiedsstelle – in NRW paritätisch
-              besetzt mit einem unparteiischen Vorsitz. Die Schiedsstelle ist an Fristen gebunden,
-              entscheidet auf Basis der vorgelegten Unterlagen und kann nur dort nachsteuern,
-              wo die Parteien ausreichend vorgetragen haben. Lückenhafte Unterlagen erzeugen
-              strukturelle Nachteile – unabhängig von der inhaltlichen Berechtigung der Forderung.
-            </p>
+            <p>Kommt keine Einigung zustande, entscheidet die Schiedsstelle – in NRW paritätisch besetzt. Sie entscheidet auf Basis der vorgelegten Unterlagen. Lückenhafte Unterlagen erzeugen strukturelle Nachteile – unabhängig von der inhaltlichen Berechtigung der Forderung.</p>
           </article>
-
-          <article class="law-card">
+          <article class="law-card reveal reveal-delay-3">
             <div class="law-tag">§ 84 SGB XI</div>
             <h3>Wirtschaftlichkeits- und Leistungsprinzip</h3>
-            <p>
-              Die vereinbarte Vergütung soll dem Grundsatz der Wirtschaftlichkeit und Sparsamkeit
-              entsprechen. Kostenträger nutzen dieses Prinzip aktiv, um Positionen abzusenken.
-              Eine wirksame Gegenstrategie erfordert belastbare operative Daten, klare Abgrenzungen
-              und eine Argumentation, die die einrichtungsspezifische Besonderheit herausarbeitet –
-              statt sich auf Branchendurchschnitte zu stützen.
-            </p>
+            <p>Die vereinbarte Vergütung soll dem Grundsatz der Wirtschaftlichkeit entsprechen. Kostenträger nutzen dieses Prinzip aktiv. Eine wirksame Gegenstrategie erfordert belastbare operative Daten und eine Argumentation, die die einrichtungsspezifische Besonderheit herausarbeitet.</p>
           </article>
         </div>
-
-        <div class="facts">
+        <div class="facts reveal">
           <div class="fact">
             <strong>Individuelle Vergütung</strong>
-            <span>Die Vergütungsvereinbarung wird einrichtungsbezogen geschlossen – kein Einheitssatz, keine Branchenpauschale.</span>
+            <span>Einrichtungsbezogen geschlossen – kein Einheitssatz, keine Branchenpauschale.</span>
           </div>
           <div class="fact">
             <strong>Formalisiertes Verfahren</strong>
-            <span>Die Schiedsstelle entscheidet auf Basis eingreichter Unterlagen – was nicht vorgetragen ist, kann nicht berücksichtigt werden.</span>
+            <span>Was nicht vorgetragen ist, kann von der Schiedsstelle nicht berücksichtigt werden.</span>
           </div>
           <div class="fact">
             <strong>Datentiefe entscheidet</strong>
-            <span>Unterlagen müssen so aufgebaut sein, dass sie fachlich, wirtschaftlich und formal im Verfahren bestehen.</span>
+            <span>Unterlagen müssen fachlich, wirtschaftlich und formal im Verfahren bestehen.</span>
           </div>
           <div class="fact">
             <strong>Zeit ist ein Faktor</strong>
-            <span>Verhandlungsfristen, Schiedsfristen und Rückwirkungsregelungen verlangen vorausschauende Vorbereitung.</span>
+            <span>Verhandlungs- und Schiedsfristen verlangen vorausschauende Vorbereitung.</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- STATEMENT -->
-    <div class="container">
+    <div class="container reveal">
       <div class="statement-block">
         <blockquote>
           Eine Vergütungsverhandlung gewinnt man nicht mit dem stärksten Argument –
@@ -1143,68 +975,42 @@
     <!-- PAKETE -->
     <section class="section" id="pakete">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Vier Pakete nach Aufwand und Datenreife</h2>
-          </div>
-          <p>
-            Die Staffelung orientiert sich nicht nur am Preis, sondern an der Qualität der
-            abgrenzungsrelevanten Werte, dem Matching-Bedarf und der strategischen Verhandlungstiefe,
-            die Ihre Situation erfordert.
-          </p>
+        <div class="section-header reveal">
+          <div><h2>Vier Pakete nach Aufwand und Datenreife</h2></div>
+          <p>Die Staffelung orientiert sich an der Qualität der abgrenzungsrelevanten Werte, dem Matching-Bedarf und der strategischen Verhandlungstiefe Ihrer Situation.</p>
         </div>
-
         <div class="packages">
-          <article class="package-card">
+          <article class="package-card reveal reveal-delay-1">
             <div class="package-badge">Segment A · Einstieg</div>
             <h3>Basis-Check</h3>
             <div class="price">490 € <small>einmalig</small></div>
-            <p class="package-copy">
-              Der strukturierte Einstieg für Einrichtungen, die eine ehrliche Ersteinschätzung
-              ihrer Unterlagen und der tatsächlichen Datenqualität benötigen – bevor weitere
-              Ressourcen investiert werden.
-            </p>
-
+            <p class="package-copy">Der strukturierte Einstieg für Einrichtungen, die eine ehrliche Ersteinschätzung ihrer Unterlagen und der tatsächlichen Datenqualität benötigen – bevor weitere Ressourcen investiert werden.</p>
             <div class="package-list">
               <div class="package-item"><span class="dot"></span><span>Kurzsichtung aller vorhandenen Unterlagen und Exportstände</span></div>
               <div class="package-item"><span class="dot"></span><span>Bewertung der Datenqualität nach Abgrenzungsreife und Plausibilität</span></div>
               <div class="package-item"><span class="dot"></span><span>Identifikation von Lücken, Brüchen und Matchingschwächen</span></div>
-              <div class="package-item"><span class="dot"></span><span>Schriftliche Empfehlung: welches Paket wirtschaftlich und inhaltlich sinnvoll anschließt</span></div>
+              <div class="package-item"><span class="dot"></span><span>Schriftliche Empfehlung: welches Paket wirtschaftlich sinnvoll anschließt</span></div>
             </div>
-
             <a href="#kontakt" class="button button-outline">Einstieg anfragen</a>
           </article>
-
-          <article class="package-card">
+          <article class="package-card reveal reveal-delay-2">
             <div class="package-badge">Segment B · Struktur</div>
             <h3>Startklar</h3>
             <div class="price">1.190 € <small>einmalig</small></div>
-            <p class="package-copy">
-              Für Dienste mit grundlegend vorhandenen Daten, bei denen Ordnung,
-              Benennung und eine erste Abgrenzungssystematik noch fehlen oder
-              nicht konsistent durchgehalten wurden.
-            </p>
-
+            <p class="package-copy">Für Dienste mit grundlegend vorhandenen Daten, bei denen Ordnung, Benennung und eine erste Abgrenzungssystematik noch fehlen oder nicht konsistent durchgehalten wurden.</p>
             <div class="package-list">
               <div class="package-item"><span class="dot"></span><span>Geordnete Sichtung aller Unterlagen, Exportstände und Quelldateien</span></div>
               <div class="package-item"><span class="dot"></span><span>Strukturpapier mit fehlenden, kritischen und nachzubessernden Positionen</span></div>
               <div class="package-item"><span class="dot"></span><span>Einordnung abgrenzungsrelevanter Werte nach Genauigkeit und Belastbarkeit</span></div>
               <div class="package-item"><span class="dot"></span><span>Erste Argumentationslinie für die weitere Verhandlungsvorbereitung</span></div>
             </div>
-
             <a href="#kontakt" class="button button-outline">Startklar wählen</a>
           </article>
-
-          <article class="package-card featured">
+          <article class="package-card featured reveal reveal-delay-3">
             <div class="package-badge">Segment C · Empfehlung</div>
             <h3>Verhandlung Plus</h3>
             <div class="price">2.490 € <small>einmalig</small></div>
-            <p class="package-copy">
-              Für Einrichtungen, die mit geordneten Daten in eine belastbare Verhandlungslogik
-              übergehen und ihre Exportwege, Argumentationsstruktur und Gesprächsvorbereitung
-              professionalisieren möchten.
-            </p>
-
+            <p class="package-copy">Für Einrichtungen, die mit geordneten Daten in eine belastbare Verhandlungslogik übergehen und ihre Exportwege, Argumentationsstruktur und Gesprächsvorbereitung professionalisieren möchten.</p>
             <div class="package-list">
               <div class="package-item"><span class="dot"></span><span>Alle Leistungen aus „Startklar"</span></div>
               <div class="package-item"><span class="dot"></span><span>Aufbau einer kohärenten Daten-, Begründungs- und Nachweisstruktur</span></div>
@@ -1212,19 +1018,13 @@
               <div class="package-item"><span class="dot"></span><span>Beratungs-Call zur Vorbereitung von Gesprächsführung, Tonlage und kritischen Rückfragen</span></div>
               <div class="package-item"><span class="dot"></span><span>Durchsicht und Kommentierung der finalen Verhandlungsunterlage</span></div>
             </div>
-
             <a href="#kontakt" class="button button-light">Empfohlenes Paket wählen</a>
           </article>
-
-          <article class="package-card">
+          <article class="package-card reveal reveal-delay-4">
             <div class="package-badge">Segment D · Intensiv</div>
             <h3>Mandat Intensiv</h3>
             <div class="price">4.990 € <small>einmalig</small></div>
-            <p class="package-copy">
-              Für anspruchsvolle Konstellationen mit mehreren Datenquellen, erhöhtem Matching-Bedarf,
-              Schiedsstellenrisiko oder einer strategisch komplexen Ausgangssituation.
-            </p>
-
+            <p class="package-copy">Für anspruchsvolle Konstellationen mit mehreren Datenquellen, erhöhtem Matching-Bedarf, Schiedsstellenrisiko oder einer strategisch komplexen Ausgangssituation.</p>
             <div class="package-list">
               <div class="package-item"><span class="dot"></span><span>Alle Leistungen aus „Verhandlung Plus"</span></div>
               <div class="package-item"><span class="dot"></span><span>Feinarchitektur für Unterlagen, Rückfragen und Nachsteuerung im Verfahren</span></div>
@@ -1232,7 +1032,6 @@
               <div class="package-item"><span class="dot"></span><span>Mehrere Abstimmungsrunden bis zur präsentationsreifen Verhandlungslinie</span></div>
               <div class="package-item"><span class="dot"></span><span>Optionale Begleitung bei der Schiedsstellenvorbereitung</span></div>
             </div>
-
             <a href="#kontakt" class="button button-outline">Mandat besprechen</a>
           </article>
         </div>
@@ -1242,40 +1041,30 @@
     <!-- DATENQUALITÄT -->
     <section class="section" id="datenqualitaet">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Staffelung nach Datenqualität</h2>
-          </div>
-          <p>
-            Nicht jede Einrichtung startet auf demselben Niveau. Der Beratungsaufwand wird danach
-            bewertet, wie präzise die abgrenzungsrelevanten Werte vorliegen, wie konsistent die
-            Exportstände sind und wie viel Nachmatching faktisch erforderlich ist.
-          </p>
+        <div class="section-header reveal">
+          <div><h2>Staffelung nach Datenqualität</h2></div>
+          <p>Der Beratungsaufwand wird danach bewertet, wie präzise die abgrenzungsrelevanten Werte vorliegen, wie konsistent die Exportstände sind und wie viel Nachmatching faktisch erforderlich ist.</p>
         </div>
-
         <div class="quality-grid">
-          <article class="quality-card">
+          <article class="quality-card reveal reveal-delay-1">
             <div class="quality-level">Level 1 · gute Datenlage</div>
             <h3>Nahezu verhandlungsreif</h3>
-            <p>Werte liegen weitgehend sauber vor, Exporte sind plausibel, Zuordnungen nachvollziehbar und konsistent. Der Schwerpunkt liegt auf Verdichtung, Form, Priorisierung und der abschließenden Argumentationslinie.</p>
+            <p>Werte liegen weitgehend sauber vor, Exporte sind plausibel. Der Schwerpunkt liegt auf Verdichtung, Form und der abschließenden Argumentationslinie.</p>
           </article>
-
-          <article class="quality-card">
+          <article class="quality-card reveal reveal-delay-2">
             <div class="quality-level">Level 2 · ordentliche Datenlage</div>
             <h3>Mit gezielter Nachschärfung</h3>
-            <p>Die Datengrundlage ist brauchbar, aber einzelne Abgrenzungen sind noch nicht präzise genug aufgestellt. Es braucht ergänzende Sortierung, punktuelles Matching und eine durchgehende Benennung der Herleitung.</p>
+            <p>Die Grundlage ist brauchbar, aber einzelne Abgrenzungen sind noch nicht präzise genug. Es braucht ergänzende Sortierung und punktuelles Matching.</p>
           </article>
-
-          <article class="quality-card">
+          <article class="quality-card reveal reveal-delay-3">
             <div class="quality-level">Level 3 · heterogene Datenlage</div>
             <h3>Mit deutlichem Nachmatching</h3>
-            <p>Unterschiedliche Quellen, uneinheitliche Exportstände oder Brüche zwischen Zahlenwelten erschweren die Lesbarkeit erheblich. Die Wirkung der Unterlagen auf Verhandlungsebene ist ohne Aufarbeitung schwach – der Beratungsaufwand steigt deutlich.</p>
+            <p>Unterschiedliche Quellen oder Brüche zwischen Zahlenwelten erschweren die Lesbarkeit erheblich. Die Wirkung ohne Aufarbeitung ist schwach – der Aufwand steigt deutlich.</p>
           </article>
-
-          <article class="quality-card">
+          <article class="quality-card reveal reveal-delay-4">
             <div class="quality-level">Level 4 · kritische Datenlage</div>
             <h3>Neu ordnen statt nur ergänzen</h3>
-            <p>Wenn abgrenzungsrelevante Werte nur teilweise belastbar sind oder die Exportwege grundsätzliche Fehlerquellen enthalten, muss zunächst eine saubere Ausgangsbasis geschaffen werden. Das ist das spezifische Einsatzfeld des Intensivmandats.</p>
+            <p>Wenn abgrenzungsrelevante Werte nur teilweise belastbar sind, muss zunächst eine saubere Ausgangsbasis geschaffen werden. Das spezifische Einsatzfeld des Intensivmandats.</p>
           </article>
         </div>
       </div>
@@ -1284,93 +1073,68 @@
     <!-- ABLAUF -->
     <section class="section" id="ablauf">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Wie die Zusammenarbeit aufgebaut ist</h2>
-          </div>
+        <div class="section-header reveal">
+          <div><h2>Wie die Zusammenarbeit aufgebaut ist</h2></div>
           <p>Der Ablauf bleibt klar strukturiert, auch wenn der Gegenstand komplex ist. Das reduziert Reibung und erhöht die Handlungsfähigkeit auf beiden Seiten.</p>
         </div>
-
-        <div class="process">
-          <article class="process-card">
-            <div class="process-index">01</div>
-            <h3>Ersteinschätzung</h3>
-            <p>Kurzbeschreibung der Ausgangslage, grobe Einschätzung der Datenreife, Klärung des zeitlichen Rahmens und des passenden Pakets.</p>
-          </article>
-
-          <article class="process-card">
-            <div class="process-index">02</div>
-            <h3>Daten ordnen</h3>
-            <p>Dateien, Exportlisten, Screenshots und Auswertungen werden in eine priorisierte, lesbare und belastbare Struktur überführt.</p>
-          </article>
-
-          <article class="process-card">
-            <div class="process-index">03</div>
-            <h3>Abgrenzungen prüfen</h3>
-            <p>Relevante Werte werden nach Genauigkeit, Herleitung und Matching-Bedarf eingeordnet, damit die Argumentation belastbar bleibt.</p>
-          </article>
-
-          <article class="process-card">
-            <div class="process-index">04</div>
-            <h3>Verhandlungslinie bauen</h3>
-            <p>Aus operativen Daten entsteht eine ruhige, professionelle Unterlage mit klarer Logik für Gespräche, Rückfragen und Einwände.</p>
-          </article>
-
-          <article class="process-card">
-            <div class="process-index">05</div>
-            <h3>Übergabe &amp; Nachsteuerung</h3>
-            <p>Finale Abstimmung, Klickanleitungen für Ihr System, optionale Begleitung im weiteren Verlauf des Verfahrens.</p>
-          </article>
+        <div class="process-wrapper">
+          <div class="process-connector"></div>
+          <div class="process">
+            <article class="process-card reveal reveal-delay-1">
+              <div class="process-index">01</div>
+              <h3>Ersteinschätzung</h3>
+              <p>Kurzbeschreibung der Ausgangslage, grobe Einschätzung der Datenreife, Klärung des zeitlichen Rahmens und des passenden Pakets.</p>
+            </article>
+            <article class="process-card reveal reveal-delay-2">
+              <div class="process-index">02</div>
+              <h3>Daten ordnen</h3>
+              <p>Dateien, Exportlisten und Auswertungen werden in eine priorisierte, lesbare und belastbare Struktur überführt.</p>
+            </article>
+            <article class="process-card reveal reveal-delay-3">
+              <div class="process-index">03</div>
+              <h3>Abgrenzungen prüfen</h3>
+              <p>Relevante Werte werden nach Genauigkeit, Herleitung und Matching-Bedarf eingeordnet, damit die Argumentation belastbar bleibt.</p>
+            </article>
+            <article class="process-card reveal reveal-delay-4">
+              <div class="process-index">04</div>
+              <h3>Verhandlungslinie bauen</h3>
+              <p>Aus operativen Daten entsteht eine ruhige, professionelle Unterlage mit klarer Logik für Gespräche und Rückfragen.</p>
+            </article>
+            <article class="process-card reveal reveal-delay-5">
+              <div class="process-index">05</div>
+              <h3>Übergabe &amp; Nachsteuerung</h3>
+              <p>Finale Abstimmung, Klickanleitungen für Ihr System, optionale Begleitung im weiteren Verlauf des Verfahrens.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PRAXIS / STORIES -->
+    <!-- STORIES -->
     <section class="section">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Typische Ausgangssituationen aus der Praxis</h2>
-          </div>
+        <div class="section-header reveal">
+          <div><h2>Typische Ausgangssituationen aus der Praxis</h2></div>
           <p>Diese Konstellationen beschreiben, wo Einrichtungen häufig stehen – und was dann konkret zu tun ist.</p>
         </div>
-
         <div class="stories">
-          <article class="story-card">
+          <article class="story-card reveal reveal-delay-1">
             <h3>„Wir haben schon alles gesammelt."</h3>
-            <p>
-              Am Anfang klingt das beruhigend. Bei näherem Blick zeigt sich oft: Die Daten sind da,
-              aber nicht aufeinander bezogen. Exporte aus verschiedenen Zeiträumen, unterschiedliche
-              Leistungszuordnungen, keine einheitliche Benennung. Erst durch Ordnung, Matching und
-              Zuordnung wird aus einer Sammlung eine verhandlungstaugliche Grundlage.
-            </p>
+            <p>Am Anfang klingt das beruhigend. Bei näherem Blick zeigt sich oft: Die Daten sind da, aber nicht aufeinander bezogen. Erst durch Ordnung, Matching und Zuordnung wird aus einer Sammlung eine verhandlungstaugliche Grundlage.</p>
             <div class="story-meta">Häufig bei Level 2–3 Datenlage · Paket: Startklar oder Verhandlung Plus</div>
           </article>
-
-          <article class="story-card">
+          <article class="story-card reveal reveal-delay-2">
             <h3>„Unsere Zahlen stimmen – nur nicht in jeder Sicht."</h3>
-            <p>
-              Genau dort entstehen Unsicherheiten in Verhandlungen. Nicht jede Differenz ist ein
-              inhaltliches Problem – aber jede nicht erklärte Differenz schwächt die Verhandlungsposition
-              erheblich. Ich mache diese Stellen sichtbar, priorisierbar und erklärbar, sodass Sie
-              auf Rückfragen vorbereitet sind statt überrascht.
-            </p>
+            <p>Genau dort entstehen Unsicherheiten in Verhandlungen. Jede nicht erklärte Differenz schwächt die Verhandlungsposition erheblich. Ich mache diese Stellen sichtbar, priorisierbar und erklärbar.</p>
             <div class="story-meta">Klassische Situation vor Schiedsstellenverfahren · Paket: Verhandlung Plus</div>
           </article>
-
-          <article class="story-card">
+          <article class="story-card reveal reveal-delay-3">
             <h3>„Die Software kann das bestimmt."</h3>
-            <p>
-              Meist stimmt das sogar. Nur fehlt oft die konkrete Klickfolge, um den richtigen Export
-              zum richtigen Zeitraum mit der richtigen Filterung zu erzeugen. Deshalb entstehen im
-              Projekt einfache, präzise Klickanleitungen für Ihr vorhandenes System – ob Vivendi,
-              SNAP, MediFox oder ein anderes Programm.
-            </p>
+            <p>Meist stimmt das sogar. Nur fehlt oft die konkrete Klickfolge. Deshalb entstehen im Projekt präzise Klickanleitungen für Ihr vorhandenes System – ob Vivendi, SNAP, MediFox oder ein anderes Programm.</p>
             <div class="story-meta">Besonders häufig in operativen Teams · Alle Pakete ab Startklar</div>
           </article>
         </div>
-
-        <div class="wide-illustration glass">
+        <div class="wide-illustration glass reveal">
           <img src="img/scene.jpg" alt="Illustrative Abfolge von Analyse bis Abschluss" />
         </div>
       </div>
@@ -1379,52 +1143,42 @@
     <!-- FAQ -->
     <section class="section" id="faq">
       <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Häufige Fragen</h2>
-          </div>
+        <div class="section-header reveal">
+          <div><h2>Häufige Fragen</h2></div>
           <p>Diese Fragen kommen regelmäßig in Erstgesprächen auf. Die Antworten helfen, den Rahmen der Beratung richtig einzuordnen.</p>
         </div>
-
         <div class="faq-grid">
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-1">
             <h4>Begleiten Sie auch direkt in der Verhandlung?</h4>
-            <p>Im Rahmen des Intensivmandats ist eine Begleitung bis zur Schiedsstellenvorbereitung möglich. Die direkte Sitzungsbegleitung in der Schiedsstelle ist davon separat zu besprechen und hängt vom konkreten Verfahrensstand ab.</p>
+            <p>Im Rahmen des Intensivmandats ist eine Begleitung bis zur Schiedsstellenvorbereitung möglich. Die direkte Sitzungsbegleitung ist separat zu besprechen und hängt vom konkreten Verfahrensstand ab.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-2">
             <h4>Welche Unterlagen brauche ich zum Start?</h4>
-            <p>Das hängt von Ihrem Ausgangsniveau ab. Für den Basis-Check genügt eine erste Sichtung dessen, was Sie bereits haben – auch wenn es unstrukturiert vorliegt. Genau das ist der Sinn des Einstiegspakets: eine ehrliche Bestandsaufnahme ohne Vorleistung.</p>
+            <p>Für den Basis-Check genügt eine erste Sichtung dessen, was Sie bereits haben – auch wenn es unstrukturiert vorliegt. Genau das ist der Sinn: eine ehrliche Bestandsaufnahme ohne Vorleistung.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-1">
             <h4>Wie schnell sind Ergebnisse verfügbar?</h4>
-            <p>Der Basis-Check ist typischerweise innerhalb von 3–5 Werktagen abgeschlossen. Für die Pakete Startklar und Verhandlung Plus sind 2–3 Wochen realistisch. Das Intensivmandat richtet sich nach dem tatsächlichen Aufwand und dem Verfahrensstand.</p>
+            <p>Der Basis-Check ist typischerweise innerhalb von 3–5 Werktagen abgeschlossen. Für Startklar und Verhandlung Plus sind 2–3 Wochen realistisch. Das Intensivmandat richtet sich nach Aufwand und Verfahrensstand.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-2">
             <h4>Arbeiten Sie auch außerhalb von NRW?</h4>
-            <p>Ja. Während meine direkte Schiedsstellenerfahrung in NRW verortet ist, sind die Kernaufgaben – Datenstrukturierung, Abgrenzungsprüfung und Verhandlungsvorbereitung – bundeslandübergreifend anwendbar. Die Rahmenbedingungen nach SGB XI gelten bundesweit.</p>
+            <p>Ja. Die Kernaufgaben – Datenstrukturierung, Abgrenzungsprüfung und Verhandlungsvorbereitung – sind bundeslandübergreifend anwendbar. Die Rahmenbedingungen nach SGB XI gelten bundesweit.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-1">
             <h4>Wie werden Unterlagen sicher übertragen?</h4>
             <p>Die Übermittlung erfolgt über ToffeeShare (Ende-zu-Ende-verschlüsselt, keine dauerhafte Speicherung) oder über individuell abgestimmte Wege. Dateien werden lokal vorbereitet und erst auf Ihre Initiative hin übertragen.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-2">
             <h4>Kann ich das Paket nach dem Basis-Check wechseln?</h4>
-            <p>Ja, der Basis-Check ist ausdrücklich dafür gedacht. Die Einstiegsgebühr wird bei Wahl eines weiterführenden Pakets vollständig angerechnet – Sie zahlen nicht doppelt.</p>
+            <p>Ja. Die Einstiegsgebühr wird bei Wahl eines weiterführenden Pakets vollständig angerechnet – Sie zahlen nicht doppelt.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-1">
             <h4>Was unterscheidet Sie von einem klassischen Unternehmensberater?</h4>
-            <p>Ich bringe Verhandlungspraxis und Datenkompetenz aus dem Pflegebereich selbst mit – nicht aus dem allgemeinen Consulting. Das bedeutet: keine Einarbeitungsphase in das Fachgebiet, keine Lernkurve bei SGB XI-Spezifika und keine theoretischen Ableitungen aus branchenfremden Analogien.</p>
+            <p>Ich bringe Verhandlungspraxis und Datenkompetenz aus dem Pflegebereich selbst mit – keine Einarbeitungsphase, keine Lernkurve bei SGB XI-Spezifika, keine theoretischen Ableitungen aus branchenfremden Analogien.</p>
           </div>
-
-          <div class="faq-item">
+          <div class="faq-item reveal reveal-delay-2">
             <h4>Wie unterscheidet sich Ihre Arbeit von einem Rechtsanwalt?</h4>
-            <p>Ich erbringe keine Rechtsberatung und kein Vertragsmanagement. Mein Fokus liegt auf der inhaltlichen Qualität, Struktur und Nachvollziehbarkeit der Verhandlungsunterlagen – also auf dem, was vor dem Anwalt oder der Schiedsstelle entscheidend ist.</p>
+            <p>Ich erbringe keine Rechtsberatung. Mein Fokus liegt auf der inhaltlichen Qualität, Struktur und Nachvollziehbarkeit der Verhandlungsunterlagen – also auf dem, was vor dem Anwalt oder der Schiedsstelle entscheidend ist.</p>
           </div>
         </div>
       </div>
@@ -1433,14 +1187,13 @@
     <!-- KONTAKT -->
     <section class="section" id="kontakt">
       <div class="container contact-grid">
-        <article class="contact-card">
+        <article class="contact-card reveal">
           <h2>Unterlagen strukturiert übergeben</h2>
           <p style="margin-top:12px;">
             Dateien per Drag-and-drop einfügen, Anfrage automatisch strukturieren und anschließend
             den bevorzugten Weg über Telegram, ToffeeShare oder E-Mail nutzen.
             Alle Dateien bleiben bis zur aktiven Freigabe lokal in Ihrem Browser.
           </p>
-
           <div class="dropzone" id="dropzone">
             <strong>Dateien hier hineinziehen</strong>
             <p>z. B. Auswertungen, PDFs, Screenshots, Kalkulationen, Exportlisten oder Rückfragen</p>
@@ -1451,28 +1204,22 @@
             </div>
             <div class="file-list" id="fileList"></div>
           </div>
-
           <div class="small-note">
-            Die Dateien bleiben zunächst lokal im Browser sichtbar. Erst wenn Sie aktiv teilen,
-            wechseln Sie in den jeweiligen Übertragungsweg. ToffeeShare verwendet Ende-zu-Ende-Verschlüsselung
-            ohne dauerhafte Serverspeicherung.
+            Die Dateien bleiben zunächst lokal im Browser. Erst wenn Sie aktiv teilen, wechseln Sie
+            in den jeweiligen Übertragungsweg. ToffeeShare verwendet Ende-zu-Ende-Verschlüsselung ohne dauerhafte Serverspeicherung.
           </div>
         </article>
-
-        <article class="contact-card">
+        <article class="contact-card reveal reveal-delay-1">
           <h2>Anfrage professionell vorbereiten</h2>
-
           <form class="contact-form" id="requestForm">
             <div class="field">
               <label for="name">Name / Einrichtung</label>
               <input type="text" id="name" placeholder="z. B. Pflegedienst Muster GmbH" />
             </div>
-
             <div class="field">
               <label for="email">E-Mail</label>
               <input type="email" id="email" placeholder="kontakt@einrichtung.de" />
             </div>
-
             <div class="field">
               <label for="package">Gewünschtes Paket (optional)</label>
               <select id="package">
@@ -1483,7 +1230,6 @@
                 <option>Segment D · Mandat Intensiv (4.990 €)</option>
               </select>
             </div>
-
             <div class="field">
               <label for="quality">Eingeschätzte Datenqualität</label>
               <select id="quality">
@@ -1493,22 +1239,18 @@
                 <option>Level 4 – kritische Datenlage, neu ordnen</option>
               </select>
             </div>
-
             <div class="field">
               <label for="message">Kurzbeschreibung der Situation</label>
               <textarea id="message" placeholder="Welche Unterlagen liegen vor? Welche Werte sind abgrenzungsrelevant? Wo bestehen Unsicherheiten? Welches Ziel soll erreicht werden? Gibt es bereits einen Verhandlungstermin oder ein laufendes Schiedsstellenverfahren?"></textarea>
             </div>
           </form>
-
           <div class="contact-buttons">
             <button class="button button-dark" type="button" id="telegramShare">Über Telegram vorbereiten</button>
             <button class="button button-light" type="button" id="toffeeShare">ToffeeShare öffnen</button>
             <button class="button button-outline" type="button" id="mailShare">Per E-Mail vorbereiten</button>
           </div>
-
           <div class="bullet-points">
-            <div>Klickanleitungen zur Dateigenerierung können für Ihre vorhandene Software individuell aufgebaut werden – Vivendi, MediFox, SNAP und weitere.</div>
-            <div>Besonders sinnvoll, wenn relevante Werte zwar vorliegen, aber noch nicht in einer verhandlungstauglichen Form zusammengeführt wurden.</div>
+            <div>Klickanleitungen zur Dateigenerierung können für Ihre Software individuell aufgebaut werden – Vivendi, MediFox, SNAP und weitere.</div>
             <div>Die Einstiegsgebühr des Basis-Checks wird bei Wahl eines weiterführenden Pakets vollständig angerechnet.</div>
             <div>Reaktionszeit auf Anfragen: in der Regel innerhalb eines Werktages.</div>
           </div>
@@ -1539,6 +1281,25 @@
   </footer>
 
   <script>
+    /* ============ SCROLL SHADOW HEADER ============ */
+    const siteHeader = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+    }, {passive:true});
+
+    /* ============ INTERSECTION OBSERVER REVEAL ============ */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.10, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ============ CONTACT FORM LOGIC ============ */
     const TELEGRAM_SHARE_BASE = "https://t.me/share/url?url=";
     const TOFFEESHARE_URL = "https://toffeeshare.com";
     const MAIL_TARGET = "kontakt@der-pflegeberater.de";
@@ -1556,9 +1317,9 @@
 
     function formatBytes(bytes){
       if(bytes < 1024) return bytes + " B";
-      if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-      if(bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + " MB";
-      return (bytes / (1024 * 1024 * 1024)).toFixed(1) + " GB";
+      if(bytes < 1048576) return (bytes/1024).toFixed(1) + " KB";
+      if(bytes < 1073741824) return (bytes/1048576).toFixed(1) + " MB";
+      return (bytes/1073741824).toFixed(1) + " GB";
     }
 
     function renderFiles(){
@@ -1570,6 +1331,7 @@
       uploadedFiles.forEach((file, index) => {
         const item = document.createElement("div");
         item.className = "file-pill";
+        item.style.animationDelay = (index * 0.06) + 's';
         item.innerHTML = `<span>${index + 1}. ${file.name}</span><span>${formatBytes(file.size)}</span>`;
         fileList.appendChild(item);
       });
@@ -1587,22 +1349,17 @@
       const quality = document.getElementById("quality").value;
       const message = document.getElementById("message").value.trim();
       const filesText = uploadedFiles.length
-        ? uploadedFiles.map((file, i) => `${i + 1}. ${file.name} (${formatBytes(file.size)})`).join("\n")
+        ? uploadedFiles.map((f, i) => `${i+1}. ${f.name} (${formatBytes(f.size)})`).join("\n")
         : "Noch keine Dateien ausgewählt";
       return [
-        "Anfrage über der-pflegeberater.de",
-        "",
-        "Name / Einrichtung: " + (name || "nicht angegeben"),
-        "E-Mail: " + (email || "nicht angegeben"),
-        "Gewünschtes Paket: " + (pkg || "Empfehlung erwünscht"),
+        "Anfrage über der-pflegeberater.de","",
+        "Name / Einrichtung: " + (name||"nicht angegeben"),
+        "E-Mail: " + (email||"nicht angegeben"),
+        "Gewünschtes Paket: " + (pkg||"Empfehlung erwünscht"),
         "Eingeschätzte Datenqualität: " + quality,
-        "",
-        "Situationsbeschreibung:",
-        message || "keine Beschreibung eingetragen",
-        "",
-        "Dateiliste:",
-        filesText,
-        "",
+        "","Situationsbeschreibung:",
+        message||"keine Beschreibung eingetragen",
+        "","Dateiliste:",filesText,"",
         "Hinweis: Dateien wurden lokal vorbereitet und können nun separat übergeben werden.",
         "Quelle: www.der-pflegeberater.de"
       ].join("\n");
@@ -1618,47 +1375,29 @@
     }
 
     pickFiles.addEventListener("click", () => fileInput.click());
-    fileInput.addEventListener("change", (e) => addFiles(e.target.files));
+    fileInput.addEventListener("change", e => addFiles(e.target.files));
 
-    ["dragenter", "dragover"].forEach(eventName => {
-      dropzone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        dropzone.classList.add("dragover");
-      });
+    ["dragenter","dragover"].forEach(ev => {
+      dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add("dragover"); });
     });
-
-    ["dragleave", "drop"].forEach(eventName => {
-      dropzone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        dropzone.classList.remove("dragover");
-      });
+    ["dragleave","drop"].forEach(ev => {
+      dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove("dragover"); });
     });
-
-    dropzone.addEventListener("drop", (e) => {
-      if(e.dataTransfer.files?.length){
-        addFiles(e.dataTransfer.files);
-      }
-    });
+    dropzone.addEventListener("drop", e => { if(e.dataTransfer.files?.length) addFiles(e.dataTransfer.files); });
 
     copyFileListBtn.addEventListener("click", () => copyText(getInquiryText()));
-
     telegramShareBtn.addEventListener("click", async () => {
       const text = getInquiryText();
       await copyText(text);
-      const url = TELEGRAM_SHARE_BASE + encodeURIComponent("https://www.der-pflegeberater.de") + "&text=" + encodeURIComponent(text);
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(TELEGRAM_SHARE_BASE + encodeURIComponent("https://www.der-pflegeberater.de") + "&text=" + encodeURIComponent(text), "_blank", "noopener,noreferrer");
     });
-
     toffeeShareBtn.addEventListener("click", async () => {
-      const text = getInquiryText() + "\n\nNächster Schritt: Dateien in ToffeeShare bereitstellen und Link versenden.";
-      await copyText(text);
+      await copyText(getInquiryText() + "\n\nNächster Schritt: Dateien in ToffeeShare bereitstellen und Link versenden.");
       window.open(TOFFEESHARE_URL, "_blank", "noopener,noreferrer");
     });
-
     mailShareBtn.addEventListener("click", () => {
       const subject = encodeURIComponent("Anfrage Vergütungsverhandlungen ambulante Pflege – der-pflegeberater.de");
-      const body = encodeURIComponent(getInquiryText());
-      window.location.href = `mailto:${MAIL_TARGET}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${MAIL_TARGET}?subject=${subject}&body=${encodeURIComponent(getInquiryText())}`;
     });
 
     renderFiles();
