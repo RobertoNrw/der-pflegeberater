@@ -590,6 +590,19 @@
           </article>
         </div>
       </div>
+
+      <div class="viz-grid" style="margin-top:24px">
+        <article class="viz-card reveal d2">
+          <h3>Indikatoren-Matrix (schematisch)</h3>
+          <p>Beispielhaftes Raster, das zeigt, welche Kennzahlen aus welchen Datenquellen speisbar sind – eine Grundlage für die Frage, welche Indikatoren für Ihr Monitoring realistisch erreichbar sind.</p>
+          <div class="viz" id="viz-heat"></div>
+        </article>
+        <article class="viz-card reveal d3">
+          <h3>Exportfähigkeit der Datenquellen</h3>
+          <p>Abstrahierte Übersicht, wie gut einzelne Datenquellen typischerweise für wiederkehrende Auswertungen und Exports nutzbar sind – ein wichtiger Punkt, bevor komplexe Monitoring-Konzepte geplant werden.</p>
+          <div class="viz viz-mini" id="viz-export"></div>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -890,6 +903,42 @@
         margin:{l:35,r:10,t:10,b:35},
         xaxis:{title:'Tarifgruppen (schematisch)',fixedrange:true},
         yaxis:{title:'Anteil (abstrahiert in %)',fixedrange:true}
+      },{displayModeBar:false,responsive:true});
+    }
+
+    const h = document.getElementById('viz-heat');
+    if(h){
+      const z = [
+        [4,3,2,1],
+        [5,4,3,2],
+        [3,3,4,4]
+      ];
+      const data = [{
+        z,
+        x:['Pflegedokumentation','DCS-Tarifmeldungen','QM/Controlling','Sonstige'],
+        y:['Leistungszeiten','Personalkosten','Tourenstruktur','Qualität/Outcome'],
+        type:'heatmap',
+        colorscale:[[0,'#efe4d2'],[1,'#9e7a47']]
+      }];
+      Plotly.newPlot(h,data,{
+        margin:{l:120,r:10,t:10,b:80},
+        xaxis:{fixedrange:true},
+        yaxis:{fixedrange:true}
+      },{displayModeBar:false,responsive:true});
+    }
+
+    const e = document.getElementById('viz-export');
+    if(e){
+      const data = [{
+        x:['Pflegedokumentation','DCS-Tarifmeldungen','QM/Controlling','Sonstige'],
+        y:[2,4,3,1],
+        type:'bar',
+        marker:{color:['#d7eceb','#9e7a47','#514375','#c7c2b7']}
+      }];
+      Plotly.newPlot(e,data,{
+        margin:{l:60,r:10,t:10,b:60},
+        xaxis:{title:'Datenquelle',fixedrange:true},
+        yaxis:{title:'Export- & Monitoringfähigkeit (1–5, schematisch)',fixedrange:true}
       },{displayModeBar:false,responsive:true});
     }
   }
