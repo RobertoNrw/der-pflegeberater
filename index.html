@@ -4,20 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>der-pflegeberater.de – Vergütungsforschung ambulante Pflege | Roberto Bonavita</title>
-  <meta name="description" content="Wissenschaftlich fundierte Auseinandersetzung mit Vergütungsverhandlungen in der ambulanten Pflege nach SGB XI. Fokus auf Datenqualität, Abgrenzungslogiken und verhandlungsrelevanten Strukturen." />
-  <meta name="keywords" content="Vergütungsforschung, ambulante Pflege, SGB XI, Schiedsstelle, Pflegedienst, NRW, Pflegeberater, Datenqualität, Abgrenzungslogik, Versorgungsforschung" />
+  <meta name="description" content="Wissenschaftlich fundierte Auseinandersetzung mit Vergütungsverhandlungen in der ambulanten Pflege nach SGB XI. Fokus auf Datenqualität, Abgrenzungslogiken, Monitoring und verhandlungsrelevanten Strukturen." />
+  <meta name="keywords" content="Vergütungsforschung, ambulante Pflege, SGB XI, Monitoring, Schiedsstelle, Pflegedienst, NRW, Pflegeberater, Datenqualität, Abgrenzungslogik, Versorgungsforschung" />
   <style>
     :root{
       --bg:#f4f1ea;
       --bg-2:#efebe3;
-      --paper:rgba(255,255,255,.74);
-      --paper-strong:rgba(255,255,255,.90);
-      --ink:#131416;
+      --paper:rgba(255,255,255,.78);
+      --paper-strong:rgba(255,255,255,.96);
+      --ink:#15161a;
       --muted:#5d636b;
       --line:rgba(18,18,18,.09);
       --line-strong:rgba(18,18,18,.18);
       --gold:#9e7a47;
       --gold-soft:#efe4d2;
+      --teal:#1f7a7a;
+      --teal-soft:#d7eceb;
+      --violet:#514375;
+      --violet-soft:#e3def2;
       --shadow:0 20px 60px rgba(0,0,0,.07);
       --shadow-hover:0 28px 72px rgba(0,0,0,.12);
       --radius-xl:34px;
@@ -47,9 +51,9 @@
 
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
     .reveal.visible{opacity:1;transform:none}
-    .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}.d5{transition-delay:.35s}
+    .d1{transition-delay:.07s}.d2{transition-delay=.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}.d5{transition-delay:.35s}
 
-    .site-header{position:sticky;top:0;z-index:90;background:rgba(244,241,234,.86);backdrop-filter:blur(22px);border-bottom:1px solid rgba(0,0,0,.055);transition:box-shadow .3s ease}
+    .site-header{position:sticky;top:0;z-index:90;background:rgba(244,241,234,.9);backdrop-filter:blur(22px);border-bottom:1px solid rgba(0,0,0,.055);transition:box-shadow .3s ease}
     .site-header.scrolled{box-shadow:0 2px 22px rgba(0,0,0,.055)}
     .nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{display:flex;flex-direction:column;gap:1px}
@@ -61,18 +65,18 @@
     .nav-links a:not(.button):hover{color:var(--ink)}
     .nav-links a:not(.button):hover::after{transform:scaleX(1)}
 
-    .button{display:inline-flex;align-items:center;gap:9px;padding:13px 21px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:.93rem;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s ease,background .2s,border-color .2s}
+    .button{display:inline-flex;align-items:center;gap:9px;padding:13px 21px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:.93rem;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s ease,background .2s,border-color .2s,color .2s}
     .button:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.09)}
     .button:active{transform:none;transition-duration:.06s}
     .btn-dark{background:var(--ink);color:#fff}
-    .btn-light{background:rgba(255,255,255,.72);border-color:var(--line);color:var(--ink)}
+    .btn-light{background:rgba(255,255,255,.8);border-color:var(--line);color:var(--ink)}
     .btn-outline{background:transparent;border-color:var(--line-strong);color:var(--ink)}
 
-    .glass{background:var(--paper);border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(16px);box-shadow:var(--shadow)}
+    .glass{background:var(--paper);border:1px solid rgba(255,255,255,.68);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
 
     .chapter{display:flex;align-items:center;gap:18px;margin:0 0 10px}
     .chapter-num{font-family:Georgia,"Times New Roman",serif;font-size:.82rem;color:var(--gold);letter-spacing:.12em;font-style:italic;white-space:nowrap;flex:0 0 auto}
-    .chapter-line{flex:1;height:1px;background:linear-gradient(90deg, rgba(158,122,71,.3), transparent)}
+    .chapter-line{flex:1;height:1px;background:linear-gradient(90deg, rgba(158,122,71,.32), transparent)}
 
     .hero{padding:52px 0 24px}
     .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch}
@@ -80,12 +84,13 @@
     .hero-visual{display:grid;grid-template-rows:1fr auto;gap:16px;animation:enterUp .85s .1s var(--ease) both}
     @keyframes enterUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
-    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:999px;background:rgba(255,255,255,.68);border:1px solid var(--line);color:var(--muted);font-size:.85rem;margin-bottom:18px;letter-spacing:.01em}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:999px;background:rgba(255,255,255,.84);border:1px solid var(--line);color:var(--muted);font-size:.85rem;margin-bottom:18px;letter-spacing:.01em}
+    .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
 
     h1,h2,h3,h4{margin:0;line-height:1.07;letter-spacing:-.035em;font-weight:660}
-    h1{font-size:clamp(2.5rem,4.2vw,4.4rem);max-width:16ch}
+    h1{font-size:clamp(2.5rem,4.2vw,4.4rem);max-width:18ch}
     h2{font-size:clamp(1.8rem,2.8vw,2.8rem)}
-    h3{font-size:1.28rem}
+    h3{font-size:1.26rem}
     h4{font-size:1rem;letter-spacing:-.02em}
 
     .lead{margin-top:20px;font-size:1.05rem;max-width:60ch;color:#2a2f36;line-height:1.72}
@@ -128,10 +133,23 @@
     .divitem strong{color:var(--ink);display:block;margin-bottom:3px;font-size:.97rem}
 
     .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .prob-card{border-radius:var(--radius-lg);padding:26px 24px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
-    .prob-card p{color:var(--muted);font-size:.95rem;line-height:1.68;margin-top:10px}
-    .prob-icon{width:38px;height:38px;border-radius:11px;background:var(--gold-soft);border:1px solid rgba(158,122,71,.14);display:grid;place-items:center;margin-bottom:14px}
-    .prob-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .prob-card{border-radius:var(--radius-lg);padding:24px 22px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .prob-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+    .prob-badge span{width:7px;height:7px;border-radius:50%;background:currentColor}
+    .prob-badge.q1{background:var(--teal-soft);color:var(--teal)}
+    .prob-badge.q2{background:var(--violet-soft);color:var(--violet)}
+    .prob-badge.q3{background:var(--gold-soft);color:var(--gold)}
+    .prob-card h3{margin-bottom:6px}
+    .prob-card p{color:var(--muted);font-size:.95rem;line-height:1.68;margin-top:4px}
+    .prob-icon{width:34px;height:34px;border-radius:11px;background:rgba(0,0,0,.02);border:1px solid rgba(0,0,0,.05);display:grid;place-items:center;margin-bottom:10px}
+    .prob-icon svg{width:18px;height:18px;stroke:var(--ink);opacity:.7;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    .monitor-strip{margin-top:22px;border-radius:24px;padding:18px 20px;background:linear-gradient(90deg,var(--teal-soft),var(--gold-soft));border:1px solid rgba(0,0,0,.04);display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+    .monitor-icon{width:32px;height:32px;border-radius:11px;background:#fff;border:1px solid rgba(0,0,0,.06);display:grid;place-items:center;flex:0 0 32px}
+    .monitor-icon svg{width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .monitor-text{flex:1;min-width:240px;font-size:.93rem;color:#273133;line-height:1.7}
+    .monitor-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .monitor-tag{font-size:.78rem;padding:4px 9px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9);color:#374045}
 
     .two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
 
@@ -142,7 +160,7 @@
 
     .law-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .law-card{border-radius:var(--radius-lg);padding:24px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
-    .law-tag{display:inline-flex;padding:6px 11px;border-radius:999px;font-size:.8rem;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(158,122,71,.2);margin-bottom:12px;font-weight:600;letter-spacing:.01em}
+    .law-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;font-size:.8rem;background:var(--violet-soft);color:var(--violet);border:1px solid rgba(81,67,117,.24);margin-bottom:12px;font-weight:600;letter-spacing:.02em}
     .law-card h3{font-size:1.12rem;margin-bottom:8px}
     .law-card p{color:var(--muted);font-size:.93rem;line-height:1.65}
 
@@ -163,8 +181,8 @@
     .statement-by::before{content:'';width:28px;height:1px;background:rgba(255,255,255,.3)}
 
     .fields{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .field-card{border-radius:28px;padding:24px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
-    .field-tag{display:inline-flex;padding:7px 12px;border-radius:999px;font-size:.8rem;margin-bottom:10px;border:1px solid var(--line);background:rgba(255,255,255,.7);color:#2e3238;font-weight:500}
+    .field-card{border-radius:28px;padding:24px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .field-tag{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-size:.8rem;margin-bottom:10px;border:1px solid var(--line);background:rgba(255,255,255,.82);color:#2e3238;font-weight:500}
     .field-card h3{font-size:1.16rem;margin-bottom:6px}
     .field-card p{color:var(--muted);font-size:.92rem;line-height:1.6}
     .field-list{display:grid;gap:0;margin-top:12px}
@@ -186,8 +204,8 @@
     .contact-card{border-radius:var(--radius-lg);padding:26px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
     .contact-card h2{margin-bottom:10px}
     .contact-card > p{color:var(--muted);font-size:.94rem;line-height:1.68;margin-bottom:0}
-    .dropzone{margin-top:16px;border:1.5px dashed rgba(20,20,20,.16);border-radius:22px;padding:26px;background:linear-gradient(180deg,rgba(255,255,255,.76),rgba(255,255,255,.58));transition:border-color .2s,background .2s,transform .2s var(--ease),box-shadow .2s}
-    .dropzone.dragover{border-color:var(--gold);background:rgba(255,255,255,.94);transform:translateY(-3px);box-shadow:0 12px 36px rgba(158,122,71,.11)}
+    .dropzone{margin-top:16px;border:1.5px dashed rgba(20,20,20,.16);border-radius:22px;padding:26px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.7));transition:border-color .2s,background .2s,transform .2s var(--ease),box-shadow .2s}
+    .dropzone.dragover{border-color:var(--gold);background:rgba(255,255,255,.98);transform:translateY(-3px);box-shadow:0 12px 36px rgba(158,122,71,.11)}
     .dropzone strong{display:block;font-size:1.05rem;margin-bottom:4px}
     .dropzone p{color:var(--muted);font-size:.91rem}
     .dropzone input{display:none}
@@ -199,7 +217,7 @@
     .contact-form{display:grid;gap:12px;margin-top:16px}
     .field{display:grid;gap:6px}
     label{font-size:.9rem;font-weight:600;color:#2d3137}
-    input[type="text"],input[type="email"],textarea,select{width:100%;padding:13px 15px;border-radius:14px;border:1px solid rgba(18,18,18,.11);background:rgba(255,255,255,.86);font:inherit;color:var(--ink);outline:none;font-size:.94rem;transition:border-color .16s,box-shadow .16s}
+    input[type="text"],input[type="email"],textarea,select{width:100%;padding:13px 15px;border-radius:14px;border:1px solid rgba(18,18,18,.11);background:rgba(255,255,255,.9);font:inherit;color:var(--ink);outline:none;font-size:.94rem;transition:border-color .16s,box-shadow .16s}
     input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(158,122,71,.09)}
     textarea{min-height:130px;resize:vertical}
     .bullets{display:grid;gap:0;margin-top:16px}
@@ -220,7 +238,7 @@
     .band-orb{width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(158,122,71,.22),transparent 70%);flex:0 0 160px}
 
     .metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
-    .metric{padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.68);border:1px solid var(--line);transition:box-shadow .26s,transform .26s var(--ease)}
+    .metric{padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.8);border:1px solid var(--line);transition:box-shadow .26s,transform .26s var(--ease)}
     .metric:hover{box-shadow:0 10px 32px rgba(0,0,0,.07);transform:translateY(-2px)}
     .metric strong{display:block;font-size:1.18rem;margin-bottom:4px;letter-spacing:-.02em}
     .metric span{color:var(--muted);font-size:.88rem;line-height:1.5}
@@ -279,12 +297,12 @@
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy glass">
-        <div class="eyebrow">Vergütungsforschung · ambulante Pflege · SGB XI</div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Vergütungsforschung · ambulante Pflege · SGB XI</div>
         <h1>Vergütungsverhandlungen als Untersuchungsfeld.</h1>
         <p class="lead">
           Diese Seite bündelt meine wissenschaftlich informierte Perspektive auf Vergütungsverhandlungen
-          in der ambulanten Pflege: als Schnittstelle von Versorgungspraxis, Gesundheitsökonomie
-          und Datenqualität. Im Zentrum stehen Fragestellungen, nicht Produkte.
+          in der ambulanten Pflege: als Schnittstelle von Versorgungspraxis, Gesundheitsökonomie,
+          Monitoring und Datenqualität. Im Zentrum stehen Fragestellungen, nicht Produkte.
         </p>
         <div class="hero-actions">
           <a href="#problem" class="button btn-dark">Forschungsfragen lesen</a>
@@ -292,7 +310,8 @@
         </div>
         <p class="hero-note">
           Für Einrichtungen, Verbände, Kostenträger, Hochschulen und Gremien, die Vergütungsverhandlungen
-          nicht nur als Pflichttermin, sondern als strukturierbares Untersuchungsfeld verstehen möchten.
+          nicht nur als Pflichttermin, sondern als strukturierbares Untersuchungs- und Monitoringsfeld
+          verstehen möchten.
         </p>
         <div class="sig">klare Daten, klare Fragen</div>
       </div>
@@ -312,43 +331,64 @@
     <div class="trustbar-inner">
       <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>SGB XI Kontexte</div>
       <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>Schiedsstellenverfahren NRW</div>
-      <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Daten- und Strukturanalysen</div>
+      <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Daten- und Monitoringanalysen</div>
       <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>Datensicherer Austausch</div>
       <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Verlässliche Reaktionszeiten</div>
     </div>
   </div>
 
-  <!-- KAPITEL I – FORSCHUNGSFRAGEN -->
+  <!-- KAPITEL I – FORSCHUNGSFRAGEN & MONITORING -->
   <section class="section" id="problem">
     <div class="container">
       <div class="section-head reveal">
         <div class="chapter"><span class="chapter-num">Kapitel I</span><span class="chapter-line"></span></div>
-        <h2>Forschungs- und Praxisfragen</h2>
-        <p class="section-sub">Vergütungsverhandlungen als Gegenstand einer strukturierenden, datenbezogenen Betrachtung.</p>
+        <h2>Forschungs- und Monitoringfragen</h2>
+        <p class="section-sub">Vergütungsverhandlungen als Quelle für Erkenntnisse über Datenlagen, Steuerung und Routinen in der ambulanten Pflege.</p>
       </div>
 
       <div class="three-col">
-        <div class="prob-card reveal d1">
-          <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <article class="prob-card reveal d1">
+          <div class="prob-badge q1"><span></span>Fragekomplex 1</div>
+          <div class="prob-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><polyline points="3 8 12 13 21 8"/></svg></div>
           <h3>Wie entstehen verhandlungsrelevante Datenlagen?</h3>
-          <p>Welche Exportpfade, Systemgrenzen und Dokumentationspraktiken prägen die Datensätze, die in Verhandlungen und Schiedsstellenverfahren als Grundlage dienen?</p>
+          <p>Welche Exportpfade, Parametereinstellungen und Dokumentationsroutinen bestimmen die Datensätze, die in Verhandlungen und Schiedsstellenverfahren vorgelegt werden – und welche Verzerrungen erzeugen sie?</p>
+        </article>
+
+        <article class="prob-card reveal d2">
+          <div class="prob-badge q2"><span></span>Fragekomplex 2</div>
+          <div class="prob-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div>
+          <h3>Wie wirken Abgrenzungs- und Zählentscheidungen?</h3>
+          <p>In welcher Weise prägen unterschiedliche Abgrenzungslogiken Leistungszeiten, Tourenstrukturen und Kennzahlen – und wie schlagen sich diese Entscheidungen in Verhandlungen und Monitoringberichten nieder?</p>
+        </article>
+
+        <article class="prob-card reveal d3">
+          <div class="prob-badge q3"><span></span>Fragekomplex 3</div>
+          <div class="prob-icon"><svg viewBox="0 0 24 24"><polyline points="4 19 10 11 13 15 20 6"/><polyline points="4 12 4 19 11 19"/></svg></div>
+          <h3>Wie lassen sich Verläufe beobachten und auswerten?</h3>
+          <p>Welche Indikatoren eignen sich für ein kontinuierliches Monitoring von Vergütungsverhandlungen – etwa in Form von Dashboards, Berichtsreihen oder Gremienunterlagen?</p>
+        </article>
+      </div>
+
+      <div class="monitor-strip reveal">
+        <div class="monitor-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><polyline points="7 14 11 10 14 12 17 8"/><line x1="9" y1="20" x2="15" y2="20"/></svg>
         </div>
-        <div class="prob-card reveal d2">
-          <div class="prob-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <h3>Wie wirken Abgrenzungsentscheidungen?</h3>
-          <p>Welche Auswirkungen haben unterschiedliche Abgrenzungslogiken auf Leistungszeiten, Tourenstrukturen und die Argumentationen in Verhandlungsprozessen?</p>
-        </div>
-        <div class="prob-card reveal d3">
-          <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>Wie verlaufen Verfahren strukturell?</h3>
-          <p>Welche Muster zeigen sich in bilateralen Verhandlungen und Schiedsstellenverfahren – unabhängig von der inhaltlichen Position der beteiligten Akteure?</p>
+        <div class="monitor-text">
+          Ein besonderer Schwerpunkt liegt auf der Frage, wie Einrichtungen und Träger aus einzelnen
+          Verhandlungen lernende Systeme machen können: mit Kennzahlen, Zeitreihen und qualitativen
+          Beobachtungen, die über den Einzelfall hinausweisende Muster sichtbar machen.
+          <div class="monitor-tags">
+            <span class="monitor-tag">Monitoring-Konzept</span>
+            <span class="monitor-tag">Indikatoren &amp; Zeitreihen</span>
+            <span class="monitor-tag">Dashboards &amp; Berichte</span>
+          </div>
         </div>
       </div>
 
       <div class="metric-row reveal">
-        <div class="metric"><strong>§ 89 SGB XI</strong><span>Individuelle Vergütungsvereinbarungen als Rahmen für einrichtungsbezogene Analysen.</span></div>
+        <div class="metric"><strong>§ 89 SGB XI</strong><span>Einrichtungsbezogene Vergütungsvereinbarungen als Rahmen für Analysen und Monitoring.</span></div>
         <div class="metric"><strong>§ 76 SGB XI</strong><span>Schiedsstellen als formalisiertes, dokumentenbasiertes Verfahren.</span></div>
-        <div class="metric"><strong>§ 84 SGB XI</strong><span>Wirtschaftlichkeitsprinzip als Argumentationsrahmen der Kostenträger.</span></div>
+        <div class="metric"><strong>§ 84 SGB XI</strong><span>Wirtschaftlichkeitsprinzip als Argumentations- und Beobachtungsrahmen.</span></div>
         <div class="metric"><strong>Datenqualität</strong><span>Abgrenzungsreife, Konsistenz und Nachvollziehbarkeit als zentrale Dimensionen.</span></div>
       </div>
     </div>
@@ -358,8 +398,9 @@
   <div class="band reveal">
     <div class="container band-inner">
       <div class="band-copy">
-        <h2>Zwischen Versorgungsforschung und Verhandlungstisch.</h2>
-        <p>Die gleiche Datengrundlage, die eine Vergütungsverhandlung trägt, ist zugleich eine Quelle für Erkenntnisse über Strukturen, Routinen und Versorgungspraxis in der ambulanten Pflege.</p>
+        <h2>Zwischen Versorgungsforschung, Monitoring und Verhandlungstisch.</h2>
+        <p>Die gleiche Datengrundlage, die eine Vergütungsverhandlung trägt, ist zugleich eine Quelle für Erkenntnisse
+        über Strukturen, Routinen und Steuerungsimpulse in der ambulanten Pflege.</p>
       </div>
       <div class="band-orb"></div>
     </div>
@@ -371,7 +412,7 @@
       <div class="section-head reveal">
         <div class="chapter"><span class="chapter-num">Kapitel II</span><span class="chapter-line"></span></div>
         <h2>Profil und Perspektive</h2>
-        <p class="section-sub">Beratung, die im selben Referenzrahmen arbeitet wie Ihre internen Analysen und Gutachten.</p>
+        <p class="section-sub">Beratung, die im selben Referenzrahmen arbeitet wie Ihre internen Analysen, Monitoringinstrumente und Gutachten.</p>
       </div>
 
       <div class="two-col">
@@ -379,7 +420,7 @@
           <p style="color:var(--muted);line-height:1.72;margin-bottom:0">
             Mein Hintergrund verbindet ambulante Pflegepraxis, pflegeökonomische Steuerung und datenbezogene Arbeit.
             Aus dieser Perspektive betrachte ich Vergütungsverhandlungen als empirisch anschlussfähiges Geschehen:
-            mit Hypothesen zu Entstehungsbedingungen, Mechanismen und Effekten.
+            mit Hypothesen zu Entstehungsbedingungen, Mechanismen, Monitoringoptionen und Effekten.
           </p>
           <div class="divlist">
             <div class="divitem"><strong>Praxisnahe Verhandlungserfahrung</strong>Verhandlungen und Gremienarbeit auf institutioneller Ebene – mit Fokus auf Strukturen und Muster, nicht auf Einzelfallrhetorik.</div>
@@ -389,7 +430,7 @@
           <div class="pill-grid">
             <span class="pill"><span class="pill-dot"></span>Gesundheitsökonomische Fragestellungen</span>
             <span class="pill"><span class="pill-dot"></span>Datenstrukturierung und Matching</span>
-            <span class="pill"><span class="pill-dot"></span>Schiedsstellen- und Gremienkontexte</span>
+            <span class="pill"><span class="pill-dot"></span>Monitoring- und Kennzahlensysteme</span>
             <span class="pill"><span class="pill-dot"></span>Versorgungs- und Pflegeforschung</span>
           </div>
         </article>
@@ -418,12 +459,12 @@
           <article class="step-card reveal d1">
             <div class="step-num">01</div>
             <h3>Dateninventur</h3>
-            <p>Systematische Erfassung vorhandener Datenquellen, Exporte und Auswertungen – inkl. Dokumentation der jeweiligen Herkunft.</p>
+            <p>Systematische Erfassung vorhandener Datenquellen, Exporte und Auswertungen – inklusive Dokumentation der jeweiligen Herkunft und Erstellungslogik.</p>
           </article>
           <article class="step-card reveal d2">
             <div class="step-num">02</div>
             <h3>Operationalisierung</h3>
-            <p>Klärung, welche Größen in welchem Sinne verwendet werden: Abgrenzungslogiken, Zählweisen, Zeitbezüge.</p>
+            <p>Klärung, welche Größen in welchem Sinne verwendet werden: Abgrenzungslogiken, Zählweisen, Zeit- und Bezugsräume.</p>
           </article>
           <article class="step-card reveal d3">
             <div class="step-num">03</div>
@@ -437,8 +478,8 @@
           </article>
           <article class="step-card reveal d5">
             <div class="step-num">05</div>
-            <h3>Transfer</h3>
-            <p>Übergabe an Ihre internen Teams, Forschungsvorhaben oder Gremienarbeit – mit klarer Beschreibung der Grenzen und Möglichkeiten der Datenlage.</p>
+            <h3>Transfer &amp; Monitoring</h3>
+            <p>Übergabe in Ihre Monitoring- und Berichtssysteme oder Forschungsvorhaben – mit klarer Beschreibung der Grenzen und Möglichkeiten der Datenlage.</p>
           </article>
         </div>
       </div>
@@ -451,19 +492,19 @@
         <article class="story-card reveal d1">
           <div class="story-diag"><span class="pill-dot"></span>Muster A</div>
           <h3>„Die Daten sind vorhanden – aber nicht als Datensatz."</h3>
-          <p>Viele Einrichtungen verfügen über umfangreiche Daten, jedoch nicht in einer Form, die als einheitlicher Datensatz gelesen werden kann. Die zentrale Aufgabe ist dann Übersetzung, nicht Erzeugung.</p>
+          <p>Viele Einrichtungen verfügen über umfangreiche Informationen, jedoch nicht in einer Form, die als einheitlicher Datensatz gelesen und fortlaufend beobachtet werden kann. Die zentrale Aufgabe ist dann Übersetzung, nicht Erzeugung.</p>
           <div class="story-meta">Typisch bei historisch gewachsenen Dokumentations- und Exportgewohnheiten.</div>
         </article>
         <article class="story-card reveal d2">
           <div class="story-diag"><span class="pill-dot"></span>Muster B</div>
           <h3>„Abgrenzungsfragen werden erst in der Verhandlung sichtbar."</h3>
           <p>Abgrenzungsrelevante Entscheidungen sind häufig implizit in Planungssoftware und Tourengestaltung hinterlegt – und werden erst in Rückfragen der Kostenträger explizit problematisiert.</p>
-          <div class="story-meta">Relevanter Anknüpfungspunkt für pflegeökonomische Analysen.</div>
+          <div class="story-meta">Relevanter Anknüpfungspunkt für pflegeökonomische Analysen und Monitoring.</div>
         </article>
         <article class="story-card reveal d3">
           <div class="story-diag"><span class="pill-dot"></span>Muster C</div>
           <h3>„Die technische Möglichkeit wird mit einer fachlichen Entscheidung verwechselt."</h3>
-          <p>Was eine Software darstellen kann, wird nicht automatisch zu einer sinnvollen analytischen Größe. Hier braucht es eine bewusste Auswahl- und Begründungsarbeit.</p>
+          <p>Was eine Software darstellen kann, wird nicht automatisch zu einer sinnvollen analytischen Größe. Hier braucht es bewusste Auswahl- und Begründungsarbeit.</p>
           <div class="story-meta">Schnittstelle zwischen Praxis, IT und wissenschaftlicher Perspektive.</div>
         </article>
       </div>
@@ -473,7 +514,7 @@
   <!-- STATEMENT -->
   <div class="container reveal" style="padding:8px 0">
     <div class="statement">
-      <blockquote>Eine Vergütungsverhandlung ist auch ein empirisches Ereignis: Sie macht sichtbar, welche Daten, Routinen und Abgrenzungen in einer Einrichtung wirken.</blockquote>
+      <blockquote>Eine Vergütungsverhandlung ist auch ein empirisches Ereignis: Sie macht sichtbar, welche Daten, Routinen und Abgrenzungen in einer Einrichtung wirken – und was davon monitoringsfähig ist.</blockquote>
       <div class="statement-by">Roberto Bonavita, der-pflegeberater.de</div>
     </div>
   </div>
@@ -491,7 +532,7 @@
         <article class="field-card reveal d1">
           <div class="field-tag">Einrichtungen</div>
           <h3>Ambulante Pflegedienste</h3>
-          <p>Begleitung von Einrichtungen, die ihre Vergütungsverhandlungen fachlich und datenbezogen stärker strukturieren möchten.</p>
+          <p>Begleitung von Einrichtungen, die ihre Vergütungsverhandlungen fachlich, datenbezogen und monitoringsfähig strukturieren möchten.</p>
           <div class="field-list">
             <div class="field-item"><span class="pill-dot"></span><span>Analyse vorhandener Datenstände und Exportwege</span></div>
             <div class="field-item"><span class="pill-dot"></span><span>Dokumentation von Abgrenzungslogiken</span></div>
@@ -502,7 +543,7 @@
         <article class="field-card reveal d2">
           <div class="field-tag">Verbände &amp; Kostenträger</div>
           <h3>Struktur- und Musteranalysen</h3>
-          <p>Auswertung wiederkehrender Themen aus Vergütungsverhandlungen als Grundlage für verbandliche oder kassenseitige Positionierungen.</p>
+          <p>Auswertung wiederkehrender Themen und Kennzahlen aus Vergütungsverhandlungen als Grundlage für verbandliche oder kassenseitige Positionierungen und Monitoringinstrumente.</p>
           <div class="field-list">
             <div class="field-item"><span class="pill-dot"></span><span>Systematisierung von Rückfragen und Ablehnungsgründen</span></div>
             <div class="field-item"><span class="pill-dot"></span><span>Übertragung in Leitlinien und Arbeitshilfen</span></div>
@@ -620,7 +661,7 @@
               <select id="focus">
                 <option>Vergütungsverhandlung laufend oder geplant</option>
                 <option>Auswertung bestehender Verhandlungsunterlagen</option>
-                <option>Konzeption eines Forschungs- oder Lehrprojekts</option>
+                <option>Konzeption eines Monitoring-, Forschungs- oder Lehrprojekts</option>
                 <option>Sonstiger Kontext im Feld SGB XI</option>
               </select>
             </div>
@@ -636,7 +677,7 @@
           </div>
           <div class="bullets">
             <div>Reaktionszeit: in der Regel innerhalb eines Werktages.</div>
-            <div>Falls sich aus Ihrer Fragestellung ein Forschungs- oder Lehrprojekt ergibt, kann die Zusammenarbeit entsprechend erweitert werden.</div>
+            <div>Falls sich aus Ihrer Fragestellung ein Monitoring-, Forschungs- oder Lehrprojekt ergibt, kann die Zusammenarbeit entsprechend erweitert werden.</div>
           </div>
         </article>
       </div>
@@ -650,7 +691,7 @@
     <div>
       <strong>www.der-pflegeberater.de</strong>
       <div class="brand-sig" style="display:inline-block;margin-top:5px">by Roberto Bonavita</div>
-      <div class="footer-note">Fachliche und datenbezogene Begleitung von Vergütungsverhandlungen in der ambulanten Pflege nach SGB XI – an der Schnittstelle von Praxis, Ökonomie und Versorgungsforschung. Kein Rechtsanwalt, keine Rechtsberatung.</div>
+      <div class="footer-note">Fachliche und datenbezogene Begleitung von Vergütungsverhandlungen in der ambulanten Pflege nach SGB XI – an der Schnittstelle von Praxis, Ökonomie, Monitoring und Versorgungsforschung. Kein Rechtsanwalt, keine Rechtsberatung.</div>
     </div>
     <div style="text-align:right;font-size:.88rem">
       <a class="muted-link" href="#problem">Forschungsfragen</a> ·
