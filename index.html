@@ -87,8 +87,8 @@
     .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:999px;background:rgba(255,255,255,.84);border:1px solid var(--line);color:var(--muted);font-size:.85rem;margin-bottom:18px;letter-spacing:.01em}
     .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
 
-    h1,h2,h3,h4{margin:0;line-height:1.07;letter-spacing:-.035em;font-weight:660}
-    h1{font-size:clamp(2.5rem,4.2vw,4.4rem);max-width:20ch}
+    h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.035em;font-weight:660}
+    h1{font-size:clamp(2.2rem,3.8vw,3.8rem);max-width:20ch;word-wrap:break-word}
     h2{font-size:clamp(1.8rem,2.8vw,2.8rem)}
     h3{font-size:1.26rem}
     h4{font-size:1rem;letter-spacing:-.02em}
@@ -109,8 +109,8 @@
     .wide-strip img{width:100%;height:100%;object-fit:cover;min-height:260px;border-radius:22px}
 
     .trustbar{padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:24px 0}
-    .trustbar-inner{display:flex;gap:32px;align-items:center;flex-wrap:wrap;justify-content:center}
-    .trust-item{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.88rem;font-weight:500}
+    .trustbar-inner{display:flex;gap:32px;align-items:center;flex-wrap:wrap;justify-content:space-between;max-width:900px;margin:0 auto}
+    .trust-item{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.88rem;font-weight:500;flex:0 0 auto}
     .trust-icon{width:32px;height:32px;border-radius:9px;background:var(--gold-soft);border:1px solid rgba(158,122,71,.14);display:grid;place-items:center;flex:0 0 32px;transition:background .2s,transform .2s var(--ease)}
     .trust-item:hover .trust-icon{background:rgba(158,122,71,.2);transform:scale(1.07)}
     .trust-icon svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -197,14 +197,14 @@
     .story-meta{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted)}
     .story-diag{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.8rem;font-weight:600;color:var(--gold);letter-spacing:.04em;text-transform:uppercase}
 
-    .viz-grid{display:grid;grid-template-columns:2fr 1.2fr;gap:18px;align-items:stretch;margin-top:8px}
+    .viz-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch;margin-top:8px}
     .viz-card{border-radius:var(--radius-lg);padding:20px;background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
     .viz-card h3{font-size:1.06rem;margin-bottom:6px}
     .viz-card p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:10px}
     .viz{flex:1;min-height:280px;border-radius:16px;background:linear-gradient(135deg,rgba(239,235,227,.9),rgba(255,255,255,.95));border:1px solid rgba(0,0,0,.04);overflow:hidden}
     .viz-small-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
     .viz-mini{min-height:200px}
-    .viz-large{min-height:350px}
+    .viz-large{min-height:420px}
 
     .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .faq-item{padding:22px;border-radius:var(--radius-md);background:var(--paper-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -1075,10 +1075,10 @@
         fill: 'tozeroy'
       };
       Plotly.newPlot(dcs, [traceAmbulant, traceStationaer, traceKombi], {
-        margin: {l: 50, r: 20, t: 20, b: 50},
-        legend: {orientation: 'h', y: 1.15, x: 0},
-        xaxis: {title: 'Jahr', fixedrange: true},
-        yaxis: {title: 'Anzahl Tarifmeldungen', fixedrange: true},
+        margin: {l: 60, r: 30, t: 30, b: 60},
+        legend: {orientation: 'h', y: 1.15, x: 0, font: {size: 11}},
+        xaxis: {title: 'Jahr', fixedrange: true, tickfont: {size: 11}},
+        yaxis: {title: 'Anzahl Tarifmeldungen', fixedrange: true, tickfont: {size: 11}, titlefont: {size: 12}},
         showlegend: true,
         hovermode: 'x unified'
       }, {displayModeBar: false, responsive: true});
@@ -1087,7 +1087,7 @@
     // Neue Visualisierung: Qualitätsindikatoren & Personalschlüssel
     const quality = document.getElementById('viz-quality');
     if(quality){
-      const categories = ['Dekubitus<br>Prävalenz','Sturzereignisse','Medikationsfehler','Mangelernährung','Soziale Teilhabe','Schmerzmanagement'];
+      const categories = ['Dekubitus-Prävalenz','Sturzereignisse','Medikationsfehler','Mangelernährung','Soziale Teilhabe','Schmerzmanagement'];
       const valuesQualitaet = [8.2, 12.5, 6.8, 9.4, 72.3, 85.6];
       const valuesPersonal = [1.8, 1.5, 1.6, 1.7, 2.2, 2.4];
       
@@ -1111,18 +1111,19 @@
       };
       
       const layout = {
-        margin: {l: 60, r: 60, t: 30, b: 80},
-        legend: {orientation: 'h', y: 1.2, x: 0},
+        margin: {l: 70, r: 70, t: 30, b: 90},
+        legend: {orientation: 'h', y: 1.15, x: 0, font: {size: 11}},
         xaxis: {
           title: 'Qualitätsbereich',
           fixedrange: true,
-          tickfont: {size: 10}
+          tickfont: {size: 11},
+          tickangle: -15
         },
         yaxis: {
           title: 'Qualität in %',
           fixedrange: true,
-          titlefont: {color: '#9e7a47'},
-          tickfont: {color: '#9e7a47'}
+          titlefont: {color: '#9e7a47', size: 12},
+          tickfont: {color: '#9e7a47', size: 11}
         },
         yaxis2: {
           title: 'Personalschlüssel',
@@ -1130,8 +1131,8 @@
           anchor: 'free',
           side: 'right',
           fixedrange: true,
-          titlefont: {color: '#1f7a7a'},
-          tickfont: {color: '#1f7a7a'}
+          titlefont: {color: '#1f7a7a', size: 12},
+          tickfont: {color: '#1f7a7a', size: 11}
         },
         showlegend: true,
         hovermode: 'x unified'
